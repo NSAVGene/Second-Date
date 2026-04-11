@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Second Date</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+    background: #080808;
+    color: #e8e4dc;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ──────────────────────────────── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 40px 60px;
+    position: relative;
+  }
+
+  /* Subtle radial glow behind headline */
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(200,169,110,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-size: 10px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: #c8a96e;
+    margin-bottom: 28px;
+  }
+
+  .hero-title {
+    font-size: clamp(64px, 10vw, 120px);
+    font-weight: 700;
+    letter-spacing: -6px;
+    color: #c8a96e;
+    line-height: 0.9;
+    margin-bottom: 32px;
+  }
+
+  .hero-tagline {
+    font-size: clamp(16px, 2.5vw, 22px);
+    font-weight: 300;
+    color: #888;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+    max-width: 520px;
+  }
+
+  .hero-sub {
+    font-size: 13px;
+    color: #555;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 70px;
+  }
+
+  /* ── CTA BUTTONS ───────────────────────── */
+  .cta-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 100px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 18px 36px;
+    border-radius: 40px;
+    transition: all 0.25s ease;
+    cursor: pointer;
+  }
+
+  .btn-primary {
+    background: #c8a96e;
+    color: #000;
+  }
+  .btn-primary:hover {
+    background: #dfc088;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(200,169,110,0.25);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: #888;
+    border: 1px solid #222;
+  }
+  .btn-secondary:hover {
+    border-color: #444;
+    color: #ccc;
+    transform: translateY(-2px);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: #555;
+    border: 1px solid #1a1a1a;
+  }
+  .btn-ghost:hover {
+    border-color: #333;
+    color: #888;
+    transform: translateY(-2px);
+  }
+
+  /* Arrow icon */
+  .arrow {
+    font-size: 16px;
+    opacity: 0.7;
+  }
+
+  /* ── PHONE PREVIEW STRIP ───────────────── */
+  .phone-strip {
+    display: flex;
+    gap: 20px;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 0 40px;
+  }
+
+  .phone-mini {
+    width: 160px;
+    height: 330px;
+    background: #111;
+    border-radius: 28px;
+    border: 1.5px solid #1e1e1e;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.04);
+    flex-shrink: 0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .phone-mini:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 50px 80px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.06);
+  }
+
+  /* Slightly raise the center phone */
+  .phone-mini.center {
+    height: 370px;
+    transform: translateY(-20px);
+  }
+  .phone-mini.center:hover {
+    transform: translateY(-28px);
+  }
+
+  .phone-mini::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 14px;
+    background: #080808;
+    border-radius: 12px;
+    z-index: 10;
+  }
+
+  .pm-screen {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .pm-sb {
+    padding: 20px 14px 4px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 7px;
+    color: #555;
+    flex-shrink: 0;
+  }
+  .pm-sb .t { font-weight: 600; color: #888; font-size: 8px; }
+
+  /* Splash mini */
+  .pm-splash {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #0a0a0a;
+    padding: 10px 14px 20px;
+    text-align: center;
+    gap: 8px;
+  }
+  .pm-logo { font-size: 20px; font-weight: 200; letter-spacing: -0.5px; color: #fff; }
+  .pm-logo-sub { font-size: 6px; letter-spacing: 2px; text-transform: uppercase; color: #c8a96e; }
+  .pm-mission { font-size: 7px; color: #666; font-style: italic; font-family: Georgia, serif; line-height: 1.6; margin: 8px 0; }
+  .pm-btn { background: #c8a96e; color: #000; font-size: 7px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 8px 0; border-radius: 20px; width: 100%; }
+  .pm-ghost { font-size: 7px; color: #444; padding: 6px 0; }
+
+  /* Match mini */
+  .pm-match {
+    flex: 1;
+    background: #0d0d0d;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 14px;
+  }
+  .pm-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #c8a96e 0%, #a07848 100%);
+    margin-bottom: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+  .pm-avatar::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 60%);
+  }
+  .pm-name { font-size: 14px; font-weight: 300; color: #fff; margin-bottom: 2px; }
+  .pm-age { font-size: 9px; color: #555; margin-bottom: 10px; }
+  .pm-bars { width: 100%; display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
+  .pm-bar-row { display: flex; justify-content: space-between; align-items: center; }
+  .pm-bar-label { font-size: 7px; color: #666; }
+  .pm-bar-val { font-size: 7px; color: #c8a96e; }
+  .pm-bar-track { width: 100%; height: 3px; background: #1e1e1e; border-radius: 2px; margin-top: 2px; }
+  .pm-bar-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, #c8a96e, #dfc088); }
+  .pm-match-btn { background: #c8a96e; color: #000; font-size: 8px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 10px 0; border-radius: 20px; width: 100%; margin-top: auto; }
+
+  /* Safety mini */
+  .pm-safety {
+    flex: 1;
+    background: #0a0a0a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 14px 12px;
+    text-align: center;
+  }
+  .pm-safety-label { font-size: 7px; letter-spacing: 2px; text-transform: uppercase; color: #c8a96e; margin-bottom: 6px; }
+  .pm-safety-title { font-size: 11px; font-weight: 300; color: #fff; margin-bottom: 4px; }
+  .pm-safety-sub { font-size: 7px; color: #555; line-height: 1.5; margin-bottom: 14px; }
+  .pm-safety-btns { display: flex; gap: 8px; width: 100%; margin-bottom: 12px; }
+  .pm-safe-btn { flex: 1; padding: 10px 0; border-radius: 10px; font-size: 8px; font-weight: 700; letter-spacing: 0.5px; }
+  .pm-safe-btn.green { background: rgba(74,222,128,0.15); color: #4ade80; border: 1px solid rgba(74,222,128,0.2); }
+  .pm-safe-btn.red { background: rgba(239,68,68,0.15); color: #ef4444; border: 1px solid rgba(239,68,68,0.2); }
+  .pm-timer { font-size: 22px; font-weight: 200; color: #fff; letter-spacing: -1px; }
+  .pm-timer-label { font-size: 7px; color: #444; margin-top: 2px; }
+
+  /* ── DIVIDER ───────────────────────────── */
+  .divider {
+    border: none;
+    border-top: 1px solid #111;
+    margin: 0;
+  }
+
+  /* ── STATS BAR ─────────────────────────── */
+  .stats-bar {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    padding: 60px 40px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .stat-item {
+    flex: 1;
+    text-align: center;
+    padding: 0 30px;
+    position: relative;
+  }
+  .stat-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 10%;
+    height: 80%;
+    width: 1px;
+    background: #1a1a1a;
+  }
+
+  .stat-num {
+    font-size: 38px;
+    font-weight: 200;
+    color: #fff;
+    letter-spacing: -2px;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .stat-num span { color: #c8a96e; }
+  .stat-label {
+    font-size: 10px;
+    color: #555;
+    letter-spacing: 1px;
+    line-height: 1.5;
+  }
+
+  /* ── FEATURES ──────────────────────────── */
+  .section {
+    padding: 80px 40px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .section-eyebrow {
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #c8a96e;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  .section-title {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 200;
+    letter-spacing: -1.5px;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 60px;
+    line-height: 1.1;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: #111;
+    border: 1px solid #111;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .feature-cell {
+    background: #0a0a0a;
+    padding: 36px 28px;
+    transition: background 0.2s ease;
+  }
+  .feature-cell:hover { background: #0d0d0d; }
+
+  .feature-num {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #333;
+    margin-bottom: 16px;
+  }
+  .feature-name {
+    font-size: 15px;
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 10px;
+    letter-spacing: -0.3px;
+  }
+  .feature-desc {
+    font-size: 12px;
+    color: #666;
+    line-height: 1.7;
+  }
+  .feature-desc strong { color: #999; font-weight: 500; }
+
+  /* ── PULL QUOTE ────────────────────────── */
+  .pull-quote-section {
+    padding: 80px 40px;
+    text-align: center;
+    position: relative;
+  }
+  .pull-quote-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at center, rgba(200,169,110,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .pull-quote {
+    font-size: clamp(20px, 3vw, 32px);
+    font-weight: 300;
+    color: #fff;
+    letter-spacing: -0.5px;
+    line-height: 1.4;
+    max-width: 720px;
+    margin: 0 auto 20px;
+    font-style: italic;
+    font-family: Georgia, serif;
+  }
+  .pull-attr {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #444;
+  }
+
+  /* ── DOCS ROW ──────────────────────────── */
+  .docs-section {
+    padding: 80px 40px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .docs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .doc-card {
+    display: block;
+    background: #0d0d0d;
+    border: 1px solid #1a1a1a;
+    border-radius: 4px;
+    padding: 36px 28px;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .doc-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: #c8a96e;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+  .doc-card:hover {
+    border-color: #2a2a2a;
+    background: #111;
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  }
+  .doc-card:hover::before {
+    transform: scaleX(1);
+  }
+
+  .doc-icon {
+    font-size: 28px;
+    margin-bottom: 20px;
+    display: block;
+    opacity: 0.7;
+  }
+  .doc-label {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #c8a96e;
+    margin-bottom: 10px;
+  }
+  .doc-title {
+    font-size: 18px;
+    font-weight: 300;
+    color: #fff;
+    letter-spacing: -0.5px;
+    margin-bottom: 10px;
+  }
+  .doc-desc {
+    font-size: 12px;
+    color: #555;
+    line-height: 1.7;
+  }
+  .doc-arrow {
+    position: absolute;
+    bottom: 28px;
+    right: 28px;
+    font-size: 18px;
+    color: #333;
+    transition: all 0.25s ease;
+  }
+  .doc-card:hover .doc-arrow {
+    color: #c8a96e;
+    transform: translate(3px, -3px);
+  }
+
+  /* ── FOOTER ────────────────────────────── */
+  .footer {
+    padding: 40px;
+    text-align: center;
+    border-top: 1px solid #111;
+  }
+  .footer-logo {
+    font-size: 28px;
+    font-weight: 200;
+    letter-spacing: -1px;
+    color: #333;
+    margin-bottom: 8px;
+  }
+  .footer-tagline {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #222;
+  }
+
+  /* ── SCROLL CUE ────────────────────────── */
+  .scroll-cue {
+    position: absolute;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0.35;
+  }
+  .scroll-cue-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, #c8a96e, transparent);
+  }
+  .scroll-cue-text {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #c8a96e;
+  }
+
+  /* ── RESPONSIVE ────────────────────────── */
+  @media (max-width: 768px) {
+    .features-grid { grid-template-columns: 1fr; }
+    .docs-grid { grid-template-columns: 1fr; }
+    .stats-bar { flex-direction: column; gap: 30px; }
+    .stat-item::after { display: none; }
+    .phone-strip { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HERO ───────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-eyebrow">Stop Guessing. Start Connecting.</div>
+  <h1 class="hero-title">Second<br>Date</h1>
+  <p class="hero-tagline">Every first meeting feels like a second date.</p>
+  <p class="hero-sub">AI-native dating · Built for real connection</p>
+
+  <div class="cta-row">
+    <a href="INVESTOR_TEASER.html" class="btn btn-primary">
+      Investor Teaser <span class="arrow">↗</span>
+    </a>
+    <a href="WHITEPAPER.html" class="btn btn-secondary">
+      Read the Whitepaper <span class="arrow">→</span>
+    </a>
+    <a href="APP_MOCKUP.html" class="btn btn-ghost">
+      App Mockup <span class="arrow">→</span>
+    </a>
+  </div>
+
+  <!-- Phone previews -->
+  <div class="phone-strip">
+
+    <!-- Phone 1: Splash -->
+    <div class="phone-mini">
+      <div class="pm-screen">
+        <div class="pm-sb"><span class="t">9:41</span><span>●●●</span></div>
+        <div class="pm-splash">
+          <div class="pm-logo">Second Date</div>
+          <div class="pm-logo-sub">Skip the awkward part</div>
+          <div class="pm-mission">"Nobody should have to pretend to be someone they're not to find love."</div>
+          <div class="pm-btn">Get Started</div>
+          <div class="pm-ghost">Sign in</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phone 2: Match (center, raised) -->
+    <div class="phone-mini center">
+      <div class="pm-screen">
+        <div class="pm-sb"><span class="t">9:41</span><span>●●●</span></div>
+        <div class="pm-match">
+          <div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#c8a96e;margin-bottom:12px;">Your Match</div>
+          <div class="pm-avatar"></div>
+          <div class="pm-name">Natalie, 31</div>
+          <div class="pm-age">2.4 miles away</div>
+          <div class="pm-bars">
+            <div>
+              <div class="pm-bar-row"><span class="pm-bar-label">Values</span><span class="pm-bar-val">94%</span></div>
+              <div class="pm-bar-track"><div class="pm-bar-fill" style="width:94%"></div></div>
+            </div>
+            <div>
+              <div class="pm-bar-row"><span class="pm-bar-label">Lifestyle</span><span class="pm-bar-val">88%</span></div>
+              <div class="pm-bar-track"><div class="pm-bar-fill" style="width:88%"></div></div>
+            </div>
+            <div>
+              <div class="pm-bar-row"><span class="pm-bar-label">Your Type</span><span class="pm-bar-val">91%</span></div>
+              <div class="pm-bar-track"><div class="pm-bar-fill" style="width:91%"></div></div>
+            </div>
+          </div>
+          <div class="pm-match-btn">Start Your First Date →</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phone 3: Safety -->
+    <div class="phone-mini">
+      <div class="pm-screen">
+        <div class="pm-sb"><span class="t">9:41</span><span>●●●</span></div>
+        <div class="pm-safety">
+          <div class="pm-safety-label">Check-In</div>
+          <div class="pm-safety-title">How's your date?</div>
+          <div class="pm-safety-sub">Your trusted contact is standing by. You have 10 minutes to respond.</div>
+          <div class="pm-safety-btns">
+            <div class="pm-safe-btn green">All Good</div>
+            <div class="pm-safe-btn red">Help Me</div>
+          </div>
+          <div class="pm-timer">9:51</div>
+          <div class="pm-timer-label">minutes remaining</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Scroll cue -->
+  <div class="scroll-cue">
+    <div class="scroll-cue-text">Scroll</div>
+    <div class="scroll-cue-line"></div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ── STATS BAR ──────────────────────────────────────────── -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-num">1<span>–</span>2<span>%</span></div>
+    <div class="stat-label">Tinder match-to-date<br>conversion rate</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num"><span>&gt;</span>60<span>%</span></div>
+    <div class="stat-label">of users find app dates<br>disappointing or awkward</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num"><span>$</span>243</div>
+    <div class="stat-label">average annual spend<br>with zero guaranteed outcome</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">3<span>+</span></div>
+    <div class="stat-label">apps the average dater<br>uses simultaneously</div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ── FEATURES ───────────────────────────────────────────── -->
+<div class="section">
+  <div class="section-eyebrow">The Platform</div>
+  <h2 class="section-title">A different kind of dating app.<br>One that wants you to leave it.</h2>
+
+  <div class="features-grid">
+
+    <div class="feature-cell">
+      <div class="feature-num">01</div>
+      <div class="feature-name">AI Onboarding Interview</div>
+      <div class="feature-desc">No questionnaire. An AI conversation builds a richer psychological profile than any form ever could. People open up when they're talking, not filling out boxes.</div>
+    </div>
+
+    <div class="feature-cell">
+      <div class="feature-num">02</div>
+      <div class="feature-name">Subconscious Type Learning</div>
+      <div class="feature-desc">Swipe photos naturally. No labels, no categories. Your <strong>real</strong> type emerges from behavior — not what you say you want, but what you actually respond to.</div>
+    </div>
+
+    <div class="feature-cell">
+      <div class="feature-num">03</div>
+      <div class="feature-name">AI-to-AI Pre-Vetting</div>
+      <div class="feature-desc">Your AI and their AI negotiate compatibility before either human interacts. Sensitive preferences — handled. No awkward disclosures. No guesswork.</div>
+    </div>
+
+    <div class="feature-cell">
+      <div class="feature-num">04</div>
+      <div class="feature-name">Your First Second Date</div>
+      <div class="feature-desc">An in-app video call is required before the venue unlocks. This IS the first date. When you meet in person, you're already on your second. Zero strangers. Zero catfish.</div>
+    </div>
+
+    <div class="feature-cell">
+      <div class="feature-num">05</div>
+      <div class="feature-name">Date Night Concierge</div>
+      <div class="feature-desc">Set a "Home By" time. The app delivers the message gracefully so you never have to. Running late? It notifies them. Want to leave early? One tap. The social buffer for everything nobody wants to say out loud.</div>
+    </div>
+
+    <div class="feature-cell">
+      <div class="feature-num">06</div>
+      <div class="feature-name">Safety Widget</div>
+      <div class="feature-desc">Geofenced to your booked venue. Silent check-ins every hour. No response in 10 minutes = treated as a red. Your trusted contact gets location, profile, photo, and date details. <strong>Silence is the trigger.</strong></div>
+    </div>
+
+    <div class="feature-cell">
+      <div class="feature-num">07</div>
+      <div class="feature-name">Phone Nudge System</div>
+      <div class="feature-desc">Passive in-date monitoring with escalating sass. Heavy users get quietly matched together — if you're both showing each other memes in 10 minutes, that's your love language. The algorithm figured it out.</div>
+    </div>
+
+    <div class="feature-cell">
+      <div class="feature-num">08</div>
+      <div class="feature-name">Post Date Review</div>
+      <div class="feature-desc">AI debrief after every date. A gap map is built — what was present, what was missing. Every next match is a targeted correction. Anonymized and fed back into the network. <strong>Every date everywhere improves everyone's next one.</strong></div>
+    </div>
+
+    <div class="feature-cell">
+      <div class="feature-num">09</div>
+      <div class="feature-name">Encrypted Local Memory</div>
+      <div class="feature-desc">All psychological data lives on-device, encrypted. Nothing in the cloud. Panic button wipes everything instantly. Your profile belongs to you — not us.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── PULL QUOTE ──────────────────────────────────────────── -->
+<div class="pull-quote-section">
+  <p class="pull-quote">"We handle the hard part. You handle the fun part."</p>
+  <div class="pull-attr">Second Date · Campaign Line</div>
+</div>
+
+<hr class="divider">
+
+<!-- ── DOCS ───────────────────────────────────────────────── -->
+<div class="docs-section">
+  <div class="section-eyebrow">The Documents</div>
+  <h2 class="section-title" style="margin-bottom:40px;">Everything you need<br>to understand what we built.</h2>
+
+  <div class="docs-grid">
+
+    <a href="INVESTOR_TEASER.html" class="doc-card">
+      <span class="doc-icon">◈</span>
+      <div class="doc-label">One Page</div>
+      <div class="doc-title">Investor Teaser</div>
+      <div class="doc-desc">The full pitch. Origin story, problem stats, 8 features, revenue model, TAM, and the Third Date Promise — in one scroll.</div>
+      <div class="doc-arrow">↗</div>
+    </a>
+
+    <a href="WHITEPAPER.html" class="doc-card">
+      <span class="doc-icon">▣</span>
+      <div class="doc-label">Deep Dive</div>
+      <div class="doc-title">Whitepaper</div>
+      <div class="doc-desc">Full product architecture, competitive analysis, privacy model, safety systems, matchmaker layer, and data flywheel — with case studies.</div>
+      <div class="doc-arrow">→</div>
+    </a>
+
+    <a href="APP_MOCKUP.html" class="doc-card">
+      <span class="doc-icon">⬡</span>
+      <div class="doc-label">UI Concept</div>
+      <div class="doc-title">App Mockup</div>
+      <div class="doc-desc">9 screens across the full user journey — from AI onboarding through match reveal, first video date, venue unlock, and post-date review.</div>
+      <div class="doc-arrow">→</div>
+    </a>
+
+  </div>
+</div>
+
+<!-- ── FOOTER ──────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="footer-logo">Second Date</div>
+  <div class="footer-tagline">Every first meeting feels like a second date.</div>
+</footer>
+
+</body>
+</html>

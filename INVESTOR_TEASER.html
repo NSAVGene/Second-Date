@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Second Date — Investor Teaser</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }https://www.youtube.com/watch?v=XfHaxZtNVr0
+  body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background: #0a0a0a;
+    color: #e8e4dc;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 92px 20px 40px;
+  }
+  .page {
+    max-width: 900px;
+    width: 100%;
+  }
+
+  /* HEADER */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 60px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #1e1e1e;
+  }
+  .logo { }
+  .logo h1 {
+    font-size: 52px;
+    font-weight: 200;
+    letter-spacing: -2px;
+    color: #fff;
+    line-height: 1;
+  }
+  .logo .tagline {
+    font-size: 13px;
+    color: #c8a96e;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+  .header-right {
+    text-align: right;
+  }
+  .header-right .label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #444;
+    margin-bottom: 6px;
+  }
+  .header-right .round {
+    font-size: 22px;
+    color: #fff;
+    font-weight: 300;
+  }
+
+  /* PROBLEM STRIP */
+  .problem-strip {
+    background: #111;
+    border: 1px solid #1e1e1e;
+    border-left: 4px solid #c8a96e;
+    padding: 24px 30px;
+    margin-bottom: 50px;
+    border-radius: 0 4px 4px 0;
+  }
+  .problem-strip .strip-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #c8a96e;
+    margin-bottom: 16px;
+  }
+  .problem-strip .bullets {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .bullet-item .num {
+    font-size: 36px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .bullet-item .desc {
+    font-size: 12px;
+    color: #666;
+    line-height: 1.5;
+  }
+
+  /* INSIGHT */
+  .insight {
+    text-align: center;
+    padding: 40px 20px;
+    margin-bottom: 50px;
+  }
+  .insight .big {
+    font-size: 28px;
+    font-weight: 200;
+    color: #fff;
+    line-height: 1.4;
+    max-width: 620px;
+    margin: 0 auto 16px;
+  }
+  .insight .big em {
+    font-style: normal;
+    color: #c8a96e;
+  }
+  .insight .sub {
+    font-size: 13px;
+    color: #555;
+    letter-spacing: 1px;
+  }
+
+  /* FEATURES */
+  .features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 50px;
+  }
+  .feat {
+    background: #111;
+    border: 1px solid #1e1e1e;
+    border-radius: 4px;
+    padding: 22px;
+  }
+  .feat .feat-num {
+    font-size: 11px;
+    color: #333;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+  }
+  .feat .feat-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .feat .feat-desc {
+    font-size: 12px;
+    color: #666;
+    line-height: 1.5;
+  }
+
+  /* REVENUE */
+  .revenue {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 50px;
+  }
+  .rev-card {
+    background: #0d0d0d;
+    border: 1px solid #1e1e1e;
+    border-top: 2px solid #c8a96e;
+    border-radius: 0 0 4px 4px;
+    padding: 24px;
+  }
+  .rev-card .rev-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #c8a96e;
+    margin-bottom: 10px;
+  }
+  .rev-card .rev-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .rev-card .rev-desc {
+    font-size: 12px;
+    color: #555;
+    line-height: 1.5;
+  }
+
+  /* TAM */
+  .tam {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 50px;
+  }
+  .tam-item {
+    text-align: center;
+    padding: 24px;
+    border: 1px solid #1e1e1e;
+    border-radius: 4px;
+  }
+  .tam-item .tam-num {
+    font-size: 40px;
+    font-weight: 200;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+  .tam-item .tam-label {
+    font-size: 11px;
+    color: #555;
+    line-height: 1.4;
+  }
+  .tam-item.highlight {
+    border-color: #c8a96e;
+    background: #111;
+  }
+  .tam-item.highlight .tam-num { color: #c8a96e; }
+
+  /* DIFFERENTIATOR */
+  .diff {
+    background: #0d1a0d;
+    border: 1px solid #1a3a1a;
+    border-radius: 6px;
+    padding: 30px 40px;
+    margin-bottom: 50px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+  .diff .diff-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #4caf50;
+    white-space: nowrap;
+    min-width: 120px;
+  }
+  .diff .diff-text {
+    font-size: 15px;
+    color: #8ab88a;
+    line-height: 1.6;
+  }
+  .diff .diff-text strong { color: #fff; }
+
+  /* CTA */
+  .cta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 30px;
+    border-top: 1px solid #1e1e1e;
+  }
+  .cta .cta-line {
+    font-size: 28px;
+    font-weight: 200;
+    color: #fff;
+  }
+  .cta .cta-line em {
+    font-style: normal;
+    color: #c8a96e;
+  }
+  .cta .cta-right {
+    text-align: right;
+  }
+  .cta .cta-right .cta-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #444;
+    margin-bottom: 6px;
+  }
+  .cta .cta-right .cta-contact {
+    font-size: 14px;
+    color: #c8a96e;
+  }
+
+  @media (max-width: 680px) {
+    .problem-strip .bullets { grid-template-columns: 1fr; }
+    .features { grid-template-columns: 1fr 1fr; }
+    .revenue { grid-template-columns: 1fr; }
+    .tam { grid-template-columns: 1fr; }
+    .header { flex-direction: column; gap: 20px; }
+    .header-right { text-align: left; }
+    .cta { flex-direction: column; gap: 20px; align-items: flex-start; }
+    .diff { flex-direction: column; gap: 15px; }
+    .logo h1 { font-size: 40px; }
+    .insight .big { font-size: 22px; }
+  }
+
+  /* NAV BAR */
+  .site-nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    height: 52px;
+  }
+  .site-nav .nav-logo {
+    font-size: 16px;
+    font-weight: 200;
+    letter-spacing: -0.5px;
+    color: #fff;
+    text-decoration: none;
+  }
+  .site-nav .nav-links {
+    display: flex;
+    gap: 6px;
+  }
+  .site-nav .nav-link {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #999;
+    text-decoration: none;
+    padding: 6px 14px;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+  }
+  .site-nav .nav-link:hover { color: #fff; }
+  .site-nav .nav-link.active { color: #c8a96e; }
+  .nav-spacer { height: 52px; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="index.html" class="nav-logo">Second Date</a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="INVESTOR_TEASER.html" class="nav-link active">Teaser</a>
+    <a href="WHITEPAPER.html" class="nav-link">Whitepaper</a>
+    <a href="APP_MOCKUP.html" class="nav-link">App Mockup</a><a href="INTERVIEW_MOCKUP.html" class="nav-link">Interview</a>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="logo">
+      <h1>Second Date</h1>
+      <div class="tagline">Stop Guessing. Start Connecting.</div>
+    </div>
+    <div class="header-right">
+      <div class="label">Round</div>
+      <div class="round">Seed — 2026</div>
+    </div>
+  </div>
+
+  <!-- MISSION STATEMENT -->
+  <div style="text-align:center; padding:40px 20px 50px; border-bottom:1px solid #1e1e1e; margin-bottom:50px;">
+    <div style="font-size:28px; font-weight:200; color:#fff; font-style:italic; line-height:1.5; max-width:600px; margin:0 auto 16px;">"Nobody should have to pretend to be someone they're not to find love."</div>
+    <div style="font-size:11px; letter-spacing:3px; text-transform:uppercase; color:#555;">The Second Date Mission</div>
+  </div>
+
+  <!-- ORIGIN STORIES -->
+  <div style="margin-bottom:50px;">
+    <div style="font-size:11px; letter-spacing:3px; text-transform:uppercase; color:#c8a96e; margin-bottom:16px; text-align:center;">Billions Built on Outdated Technology.</div>
+    <div style="text-align:center; font-size:14px; color:#aaa; line-height:1.7; max-width:680px; margin:0 auto 30px;">Tinder launched in 2012. Its core mechanic — swipe left, swipe right — has not meaningfully changed since. Bumble added one rule. Match Group spent a decade acquiring competitors rather than innovating. The entire $9 billion dating app industry is running on technology that predates modern AI, behavioral learning, and on-device intelligence by a decade. The market is enormous, proven, and structurally underserved by every product currently in it. <strong style="color:#fff;">It's time for something revolutionary.</strong></div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px;">
+
+      <div style="background:#111; border:1px solid #1e1e1e; border-radius:4px; padding:28px;">
+        <div style="font-size:48px; font-weight:700; color:#fff; letter-spacing:-2px; line-height:1; margin-bottom:8px;">$40B</div>
+        <div style="font-size:13px; font-weight:600; color:#fff; margin-bottom:12px;">Tinder</div>
+        <div style="font-size:13px; color:#999; line-height:1.7;">Started as a hackathon project at a startup incubator. Sean Rad pitched it in a room. Someone got excited. A prototype was built over a weekend and launched at one college campus — USC. Word spread. That's it. That's the whole origin story of one of the most valuable consumer apps ever built. One idea. One weekend. One campus.</div>
+      </div>
+
+      <div style="background:#111; border:1px solid #1e1e1e; border-radius:4px; padding:28px;">
+        <div style="font-size:48px; font-weight:700; color:#fff; letter-spacing:-2px; line-height:1; margin-bottom:8px;">$8B</div>
+        <div style="font-size:13px; font-weight:600; color:#fff; margin-bottom:12px;">Bumble</div>
+        <div style="font-size:13px; color:#999; line-height:1.7;">Whitney Wolfe Herd had one idea: women message first. That's the entire product differentiation. One rule change on a mechanic Tinder already owned. She built an $8 billion company on a single belief about how dating should feel for women. One idea. One rule. One belief.</div>
+      </div>
+
+      <div style="background:#111; border:1px solid #1e1e1e; border-radius:4px; padding:28px;">
+        <div style="font-size:48px; font-weight:700; color:#fff; letter-spacing:-2px; line-height:1; margin-bottom:8px;">$3.4B</div>
+        <div style="font-size:13px; font-weight:600; color:#fff; margin-bottom:12px;">Match Group — per year</div>
+        <div style="font-size:13px; color:#999; line-height:1.7;">Tinder. Hinge. OKCupid. Bumble. Match.com. Forty apps. $3.4 billion a year in revenue — selling a product that structurally doesn't work. Their entire business model depends on you staying single. The moment Second Date succeeds at scale, every dollar they ever made looks like what it always was: a tax on loneliness.</div>
+      </div>
+
+    </div>
+    <div style="text-align:center; margin-top:24px; font-size:15px; color:#fff; font-style:italic; font-weight:300; padding:20px; border:1px solid #1e1e1e; border-radius:4px; background:#0a0a0a;">
+      They built billion dollar companies on features.<br>
+      <strong style="font-style:normal; color:#c8a96e;">Second Date is built on a philosophy.</strong>
+    </div>
+  </div>
+
+  <!-- THE PROBLEM -->
+  <div class="problem-strip">
+    <div class="strip-label">The Problem With Dating Apps</div>
+    <div class="bullets">
+      <div class="bullet-item">
+        <div class="num">1–2%</div>
+        <div class="desc">Tinder match-to-date conversion. The rest goes nowhere.</div>
+      </div>
+      <div class="bullet-item">
+        <div class="num">&gt;60%</div>
+        <div class="desc">Users report most app dates as disappointing or awkward.</div>
+      </div>
+      <div class="bullet-item">
+        <div class="num">$243</div>
+        <div class="desc">Average annual spend per user. With zero guaranteed outcome.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INSIGHT -->
+  <div class="insight">
+    <div class="big">You don't tell YouTube Music what you like.<br><em>It figures it out.</em><br>We built that — for people.</div>
+    <div class="sub">No questionnaire. No profile. No guessing. Just a match that feels like you already knew them.</div>
+  </div>
+
+  <!-- YOUTUBE STAT STRIP -->
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:50px;">
+    <div style="background:#111; border:1px solid #1e1e1e; border-radius:4px; padding:28px; display:flex; flex-direction:column; justify-content:space-between;">
+      <div style="font-size:11px; letter-spacing:3px; text-transform:uppercase; color:#c8a96e; margin-bottom:14px;">The Proof It Works</div>
+      <div style="font-size:42px; font-weight:700; color:#fff; line-height:1; margin-bottom:8px;">70%</div>
+      <div style="font-size:13px; color:#999; line-height:1.5;">of total YouTube watch time comes from algorithm recommendations — not user searches. It doesn't match your favorites. <strong style="color:#aaa;">It gets you.</strong> That's the engine we're putting behind your love life.</div>
+    </div>
+    <div style="background:#111; border:1px solid #1e1e1e; border-radius:4px; padding:28px; display:flex; flex-direction:column; justify-content:space-between;">
+      <div style="font-size:11px; letter-spacing:3px; text-transform:uppercase; color:#c8a96e; margin-bottom:14px;">Why It's Different</div>
+      <div style="font-size:18px; font-weight:300; color:#fff; line-height:1.5; margin-bottom:12px;">"I can't wait to see what comes up next."</div>
+      <div style="font-size:13px; color:#999; line-height:1.5;">That's the feeling YouTube Music creates. Anticipation of discovery. We're applying that same dopamine loop to the most important decision you'll ever make. The next one might be <strong style="color:#aaa;">the one.</strong></div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <div class="features">
+    <div class="feat">
+      <div class="feat-num">01</div>
+      <div class="feat-title">AI Onboarding Interview</div>
+      <div class="feat-desc">No form. No profile to perform. An AI conversation — the kind a skilled matchmaker would have with a new client. People reveal things in conversation they'd never type into an app. The AI listens. Every answer builds a psychological profile more honest and actionable than any questionnaire. <strong style="color:#aaa;">You don't fill out Second Date. You tell it who you are.</strong></div>
+    </div>
+    <div class="feat">
+      <div class="feat-num">02</div>
+      <div class="feat-title">Subconscious Type Learning</div>
+      <div class="feat-desc">You think you know your type. You don't. Not completely. Social pressure and self-perception distort what you say you're attracted to versus what you actually respond to.<br><br>Second Date doesn't ask. It watches. Swipe photos naturally — no categories, no labels. After enough swipes, an unbiased pattern emerges. <strong style="color:#aaa;">Your actual type. The one that lives below the surface.</strong></div>
+    </div>
+    <div class="feat">
+      <div class="feat-num">03</div>
+      <div class="feat-title">AI-to-AI Pre-Vetting</div>
+      <div class="feat-desc">Before you ever interact, the two AIs talk first. They negotiate compatibility across lifestyle, values, dealbreakers, and what each person's last few dates were missing — without either person having to disclose anything directly.<br><br>The AI has already done the work most people spend three months of awkward dates trying to figure out. <strong style="color:#aaa;">You meet because you're already compatible.</strong></div>
+    </div>
+    <div class="feat">
+      <div class="feat-num">04</div>
+      <div class="feat-title">Post Date Review (PDR)</div>
+      <div class="feat-desc">After every date the AI debriefs you. What was there. What was missing. What almost worked. The answers build a <strong style="color:#aaa;">gap map</strong> — and the next match fills the holes the last one left.<br><br>Nobody fills out a form. The date happened and the AI paid attention. <strong style="color:#aaa;">Your next match isn't a new guess. It's a smarter one.</strong> Both say yes? You're in the Third Date draw. Second Date picks up the tab.</div>
+    </div>
+    <div class="feat">
+      <div class="feat-num">05</div>
+      <div class="feat-title">Date Night Concierge</div>
+      <div class="feat-desc">The app manages the whole night, not just the match. Book in-app. Set a "home by" time — the app delivers it gracefully so you never have to. Running late? Your date already knows. Want to leave early? One tap. The app says what you can't.<br><br><strong style="color:#aaa;">The social buffer for everything nobody wants to say out loud.</strong> The relaxed you is the best you.</div>
+    </div>
+    <div class="feat">
+      <div class="feat-num">06</div>
+      <div class="feat-title">Encrypted Local Memory</div>
+      <div class="feat-desc">Every other dating app is a surveillance operation with a romantic UI. Second Date is different by architecture. All psychological data lives on your device, encrypted. Nothing in the cloud. No data brokerage. Ever.<br><br>Panic button wipes everything instantly. No recovery. No trace. <strong style="color:#aaa;">Your secrets are yours.</strong></div>
+    </div>
+    <div class="feat">
+      <div class="feat-num">07</div>
+      <div class="feat-title">Safety Date Widget</div>
+      <div class="feat-desc">The app booked the venue — so it already knows where you're supposed to be. Live location tracked against it. Leave unexpectedly and a check-in fires immediately. Every hour: one green button, one red. No response in 10 minutes is treated as red. Trusted contact gets everything instantly.<br><br><strong style="color:#aaa;">Silence is the trigger. The app doesn't guess where you should be. It knows.</strong></div>
+    </div>
+    <div class="feat">
+      <div class="feat-num">08</div>
+      <div class="feat-title">Your First Second Date</div>
+      <div class="feat-desc">A live in-app video call is required before the venue unlocks. This is your First Date. By the time you walk in, the stranger energy is already gone. You've already laughed. Already broken the ice.<br><br><em style="color:#c8a96e;">"Congratulations. You just had your first date. Now let's plan the second one."</em><br><br>Catfish can fake photos. <strong style="color:#aaa;">They cannot fake a live call. Zero strangers. Guaranteed.</strong></div>
+    </div>
+  </div>
+
+  <!-- DOOM SCROLLER CALLOUT -->
+  <div style="background:#111; border:1px solid #1e1e1e; border-radius:6px; padding:36px 40px; margin-bottom:30px;">
+    <div style="font-size:10px; letter-spacing:3px; text-transform:uppercase; color:#c8a96e; margin-bottom:20px;">The Signal Nobody Talks About</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:30px;">
+
+      <!-- LEFT: NUDGE SEQUENCE FIRST -->
+      <div>
+        <div style="font-size:13px; color:#c8a96e; margin-bottom:16px; letter-spacing:1px; text-transform:uppercase; font-size:10px;">Personal Date Coach</div>
+        <div style="font-size:18px; color:#fff; font-weight:300; margin-bottom:16px; line-height:1.4;">You keep looking at your phone.</div>
+        <div style="font-size:12px; color:#999; line-height:2.1; margin-bottom:16px;">
+          <div><strong style="color:#888;">1st:</strong> "Don't forget there's a real human sitting across from you."</div>
+          <div><strong style="color:#888;">2nd:</strong> "Seriously. Put it down. We didn't do all this work for you to check likes."</div>
+          <div><strong style="color:#888;">3rd:</strong> "Your match just reported you're on your phone. Just kidding. But also... put it down."</div>
+        </div>
+        <div style="font-size:12px; color:#555; line-height:1.6; border-top:1px solid #222; padding-top:14px;">Second Date monitors in-app activity passively during the date. A little nudge — escalating in personality — fires if you disappear into your phone. The tone is never a warning. It always sounds like a friend who set this whole thing up and is not going to let you blow it.</div>
+      </div>
+
+      <!-- RIGHT: DOOM SCROLLER PAYOFF -->
+      <div style="border-left:1px solid #222; padding-left:30px;">
+        <div style="font-size:10px; letter-spacing:3px; text-transform:uppercase; color:#c8a96e; margin-bottom:16px;">Unless...</div>
+        <div style="font-size:18px; color:#fff; font-weight:300; margin-bottom:12px; line-height:1.4;">Nobody admits they're addicted to their phone. The app already knows.</div>
+        <div style="font-size:13px; color:#999; line-height:1.6;">In-date phone usage is tracked passively. Heavy users get matched with heavy users. Present users get matched with present users. No form. No confession. Just two doom scrollers on a date, phones out in 10 minutes, showing each other memes — and neither one cares. <strong style="color:#aaa;">That's their love language.</strong> The algorithm figured it out silently.</div>
+        <div style="margin-top:16px; font-size:13px; color:#c8a96e; font-style:italic; border-top:1px solid #222; padding-top:14px;">"Finally. A dating app that matches you with someone who also can't put their phone down."<br><strong style="font-style:normal; letter-spacing:1px; font-size:11px;">Compatibility instead of Judgment.</strong></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SAFETY CALLOUT -->
+  <div style="background:#0d0d1a; border:1px solid #2a2a4a; border-left:4px solid #7b7bde; border-radius:0 4px 4px 0; padding:28px 36px; margin-bottom:50px; display:flex; align-items:center; gap:30px;">
+    <div style="font-size:10px; letter-spacing:3px; text-transform:uppercase; color:#7b7bde; white-space:nowrap; min-width:100px;">Safety First</div>
+    <div style="font-size:14px; color:#8888bb; line-height:1.6;">Second Date is the only dating app where <strong style="color:#fff;">every in-person meeting is technically a second date.</strong> The video call, the safety widget, and the trusted contact system are not opt-in features — they are the standard. By the time you meet someone, you already know them. We protect our users before, during, and after — invisibly, because the safety is built into the experience.</div>
+  </div>
+
+  <!-- REVENUE -->
+  <div class="revenue">
+    <div class="rev-card">
+      <div class="rev-label">Stream 01</div>
+      <div class="rev-title">Subscription</div>
+      <div class="rev-desc">$29–49/mo per user. Premium tier unlocks PDR depth, priority matching, date night concierge.</div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-label">Stream 02</div>
+      <div class="rev-title">Brand Intelligence</div>
+      <div class="rev-desc">Anonymized PDR data sold to brands — fragrance, fashion, hospitality. First-party emotional outcome data. No comparable dataset exists.</div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-label">Stream 03</div>
+      <div class="rev-title">Venue Certification</div>
+      <div class="rev-desc">"Second Date Certified" venue licensing. Annual fee. Zero incremental cost. Drives reservations and brand credibility simultaneously.</div>
+    </div>
+  </div>
+
+  <!-- TAM -->
+  <div class="tam">
+    <div class="tam-item">
+      <div class="tam-num">$9B</div>
+      <div class="tam-label">Online dating market.<br>Direct competitive set.</div>
+    </div>
+    <div class="tam-item highlight">
+      <div class="tam-num">$50B+</div>
+      <div class="tam-label">Brand + venue adjacent market accessible via PDR data asset.</div>
+    </div>
+    <div class="tam-item">
+      <div class="tam-num">$10B</div>
+      <div class="tam-label">Match Group valuation — built on a product misaligned with user success.</div>
+    </div>
+  </div>
+
+  <!-- KEY DIFFERENTIATOR -->
+  <div class="diff">
+    <div class="diff-label">The Real Moat</div>
+    <div class="diff-text">Every competitor is <strong>optimizing for engagement</strong> — keeping you on the app longer. That means keeping you single. Second Date is the <strong>first dating platform structurally incentivized to find you a match</strong>. We succeed when you do. The PDR data flywheel compounds every night someone goes on a date, anywhere in our network. This dataset cannot be replicated. It requires time, real dates, and real outcomes at scale — which requires being first.</div>
+  </div>
+
+  <!-- THE REAL PRODUCT -->
+  <div style="background:#0a0a0a; border:1px solid #1e1e1e; border-radius:6px; padding:40px; margin-bottom:40px;">
+    <div style="font-size:11px; letter-spacing:3px; text-transform:uppercase; color:#c8a96e; margin-bottom:24px;">The Real Product</div>
+    <div style="font-size:26px; font-weight:200; color:#fff; line-height:1.4; margin-bottom:20px;">The relaxed you is the best you.<br><span style="color:#c8a96e;">That's the whole thing.</span></div>
+    <div style="font-size:14px; color:#999; line-height:1.8; margin-bottom:24px;">You're rushing out the door. Hands full. Heart pounding. Last thing you want to do is stop and send an apology text. So you don't. You show up flustered, apologetic, already behind — spending the first ten minutes of your date recovering instead of connecting.<br><br>Second Date already told them. Calmly. Before it was a problem. You walk in relaxed. You walk in as yourself. And that — not the algorithm, not the AI, not the matching — is when real connection happens.</div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:24px;">
+      <div style="background:#111; border:1px solid #1e1e1e; border-radius:4px; padding:16px; font-size:12px; color:#999; line-height:1.6;"><strong style="color:#aaa; display:block; margin-bottom:6px;">No profile to write</strong>No performance. No lying to yourself about your type. Just react.</div>
+      <div style="background:#111; border:1px solid #1e1e1e; border-radius:4px; padding:16px; font-size:12px; color:#999; line-height:1.6;"><strong style="color:#aaa; display:block; margin-bottom:6px;">No stranger across the table</strong>You've already seen their face. Already broken the ice. Already relaxed.</div>
+      <div style="background:#111; border:1px solid #1e1e1e; border-radius:4px; padding:16px; font-size:12px; color:#999; line-height:1.6;"><strong style="color:#aaa; display:block; margin-bottom:6px;">No awkward exit to manage</strong>One tap. The app says what you can't. Graceful. Zero hurt feelings.</div>
+      <div style="background:#111; border:1px solid #1e1e1e; border-radius:4px; padding:16px; font-size:12px; color:#999; line-height:1.6;"><strong style="color:#aaa; display:block; margin-bottom:6px;">No "I'm running late" text</strong>App handles it before you remember to. You focus on getting there.</div>
+      <div style="background:#111; border:1px solid #1e1e1e; border-radius:4px; padding:16px; font-size:12px; color:#999; line-height:1.6;"><strong style="color:#aaa; display:block; margin-bottom:6px;">No safety anxiety</strong>Trusted contact watching. Geofence active. Check-in set. You know someone's got you.</div>
+      <div style="background:#111; border:1px solid #1e1e1e; border-radius:4px; padding:16px; font-size:12px; color:#999; line-height:1.6;"><strong style="color:#aaa; display:block; margin-bottom:6px;">No explaining your phone addiction</strong>The algorithm already found someone just like you. They're already on theirs.</div>
+    </div>
+    <div style="font-size:16px; color:#fff; font-style:italic; border-top:1px solid #1e1e1e; padding-top:20px; line-height:1.6;">"The algorithm doesn't make people fall in love. It removes every obstacle standing in the way of it happening naturally."</div>
+  </div>
+
+  <!-- THIRD DATE -->
+  <div style="background:#111; border:1px solid #1e1e1e; border-radius:6px; padding:40px; margin-bottom:40px; text-align:center;">
+    <div style="font-size:11px; letter-spacing:3px; text-transform:uppercase; color:#c8a96e; margin-bottom:24px;">The Third Date Promise</div>
+    <div style="font-size:15px; color:#888; line-height:2; margin-bottom:30px;">
+      <strong style="color:#fff;">First Date:</strong> The video call. You meet. Ice broken. Venue unlocks.<br>
+      <strong style="color:#fff;">Second Date:</strong> In person. Already relaxed. Already connected.<br>
+      <strong style="color:#fff;">Third Date:</strong> Both said yes in the PDR. Enter the draw. <strong style="color:#c8a96e;">Second Date picks up the tab.</strong>
+    </div>
+    <div style="font-size:13px; color:#555; line-height:1.7; max-width:500px; margin:0 auto 30px;">Not everyone wins — but everyone wonders if they will. Every PDR is a ticket. Every mutual yes is a spin of the wheel. Winners post it. Tag it. Tell everyone. The product is the promotion.</div>
+    <div style="font-size:26px; font-weight:200; color:#fff; font-style:italic; line-height:1.5; border-top:1px solid #1e1e1e; padding-top:28px;">
+      "We handle the hard part. You handle the fun part."
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta">
+    <div class="cta-line">Don't waste time dating.<br><em>Get to knowing.</em></div>
+    <div class="cta-right">
+      <div class="cta-label">Deck + Data Room</div>
+      <div class="cta-contact">Available on request</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

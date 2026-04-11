@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Second Date — AI Interview</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', 'Helvetica Neue', sans-serif;
+    background: #080808;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+  }
+
+  /* NAV */
+  .site-nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: rgba(8,8,8,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    height: 52px;
+  }
+  .nav-logo { font-size: 16px; font-weight: 200; letter-spacing: -0.5px; color: #fff; text-decoration: none; }
+  .nav-links { display: flex; gap: 6px; }
+  .nav-link { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #999; text-decoration: none; padding: 6px 14px; border-radius: 20px; transition: all 0.2s ease; }
+  .nav-link:hover { color: #fff; }
+  .nav-link.active { color: #c8a96e; }
+
+  /* PAGE LABEL */
+  .page-label {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .page-label .title {
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #c8a96e;
+    margin-bottom: 8px;
+  }
+  .page-label .sub {
+    font-size: 12px;
+    color: #444;
+    letter-spacing: 1px;
+  }
+
+  /* PHONE FRAME */
+  .phone {
+    width: 393px;
+    height: 852px;
+    background: #000;
+    border-radius: 54px;
+    border: 1px solid #2a2a2a;
+    position: relative;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px #111,
+      0 60px 120px rgba(0,0,0,0.8),
+      0 20px 40px rgba(0,0,0,0.6),
+      inset 0 1px 0 rgba(255,255,255,0.08);
+  }
+
+  /* Dynamic Island */
+  .dynamic-island {
+    position: absolute;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 34px;
+    background: #000;
+    border-radius: 20px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 10px;
+    gap: 6px;
+  }
+  .island-camera {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: #1a1a1a;
+    border: 1px solid #222;
+    position: relative;
+  }
+  .island-camera::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: #111;
+    box-shadow: 0 0 0 1px #1e1e1e;
+  }
+
+  /* STATUS BAR */
+  .status-bar {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 60px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 0 28px 8px;
+    z-index: 99;
+  }
+  .sb-time { font-size: 15px; font-weight: 600; color: #fff; letter-spacing: -0.3px; }
+  .sb-icons { display: flex; gap: 6px; align-items: center; }
+  .sb-icon { font-size: 11px; color: #fff; opacity: 0.85; }
+
+  /* SCREEN */
+  .screen {
+    position: absolute;
+    inset: 0;
+    background: #0d0d0f;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* CHAT HEADER */
+  .chat-header {
+    padding: 68px 20px 14px;
+    border-bottom: 1px solid #1c1c1e;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .chat-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #c8a96e 0%, #8a6a3a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .chat-header-info { flex: 1; }
+  .chat-name { font-size: 15px; font-weight: 600; color: #fff; }
+  .chat-status { font-size: 11px; color: #c8a96e; margin-top: 1px; }
+  .chat-header-right { font-size: 11px; color: #3a3a3c; letter-spacing: 1px; }
+
+  /* PROGRESS BAR */
+  .progress-bar-wrap {
+    padding: 10px 20px;
+    flex-shrink: 0;
+    border-bottom: 1px solid #1c1c1e;
+  }
+  .progress-bar-top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .pb-label { font-size: 10px; color: #3a3a3c; letter-spacing: 1px; text-transform: uppercase; }
+  .pb-pct { font-size: 10px; color: #c8a96e; }
+  .progress-track {
+    width: 100%;
+    height: 3px;
+    background: #1c1c1e;
+    border-radius: 2px;
+  }
+  .progress-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #c8a96e, #e8c98e);
+    transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* MESSAGES */
+  .messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 16px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    scroll-behavior: smooth;
+  }
+  .messages::-webkit-scrollbar { display: none; }
+
+  /* Timestamp */
+  .ts {
+    text-align: center;
+    font-size: 10px;
+    color: #3a3a3c;
+    letter-spacing: 0.5px;
+    margin: 4px 0;
+  }
+
+  /* Bubble */
+  .bubble-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+  }
+  .bubble-row.user { justify-content: flex-end; }
+  .bubble-row.ai { justify-content: flex-start; }
+
+  .bubble-avatar {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #c8a96e 0%, #8a6a3a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    flex-shrink: 0;
+    margin-bottom: 2px;
+  }
+
+  .bubble {
+    max-width: 75%;
+    padding: 11px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    line-height: 1.5;
+    letter-spacing: -0.1px;
+  }
+  .bubble.ai {
+    background: #1c1c1e;
+    color: #e8e8ed;
+    border-radius: 20px 20px 20px 5px;
+  }
+  .bubble.user {
+    background: #c8a96e;
+    color: #000;
+    font-weight: 500;
+    border-radius: 20px 20px 5px 20px;
+  }
+  .bubble em {
+    color: #c8a96e;
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  /* Typing indicator */
+  .typing-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+  }
+  .typing-bubble {
+    background: #1c1c1e;
+    padding: 12px 16px;
+    border-radius: 20px 20px 20px 5px;
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+  .typing-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #555;
+    animation: typingPulse 1.4s infinite ease-in-out;
+  }
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes typingPulse {
+    0%, 60%, 100% { opacity: 0.2; transform: translateY(0); }
+    30% { opacity: 1; transform: translateY(-3px); }
+  }
+
+  /* Quick replies */
+  .quick-replies {
+    padding: 8px 16px 4px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+  }
+  .quick-reply {
+    background: transparent;
+    border: 1px solid #2c2c2e;
+    color: #c8a96e;
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+  }
+  .quick-reply:hover, .quick-reply:active {
+    background: rgba(200,169,110,0.12);
+    border-color: #c8a96e;
+  }
+  .quick-reply.selected {
+    background: #c8a96e;
+    color: #000;
+    font-weight: 600;
+    border-color: #c8a96e;
+  }
+
+  /* Chat input */
+  .chat-input-wrap {
+    padding: 8px 16px 32px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    border-top: 1px solid #1c1c1e;
+  }
+  .chat-input {
+    flex: 1;
+    background: #1c1c1e;
+    border: none;
+    border-radius: 22px;
+    padding: 11px 18px;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    color: #e8e8ed;
+    outline: none;
+    caret-color: #c8a96e;
+  }
+  .chat-input::placeholder { color: #48484a; }
+  .send-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #c8a96e;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    flex-shrink: 0;
+  }
+  .send-btn:hover { background: #dfc088; transform: scale(1.05); }
+  .send-btn svg { width: 16px; height: 16px; fill: #000; }
+
+  /* Profile insight pill */
+  .insight-pill {
+    background: rgba(200,169,110,0.08);
+    border: 1px solid rgba(200,169,110,0.2);
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-size: 11px;
+    color: #c8a96e;
+    margin: 2px 0 2px 34px;
+    letter-spacing: 0.2px;
+    line-height: 1.5;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: all 0.4s ease;
+  }
+  .insight-pill.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .insight-pill strong { font-weight: 600; }
+
+  /* Home indicator */
+  .home-indicator {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 130px;
+    height: 5px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 3px;
+  }
+
+  /* RESTART BUTTON */
+  .restart-btn {
+    margin-top: 24px;
+    background: transparent;
+    border: 1px solid #1e1e1e;
+    color: #444;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 10px 24px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.2s ease;
+  }
+  .restart-btn:hover { color: #888; border-color: #333; }
+
+  /* Profile Card */
+  .profile-card {
+    margin: 12px 16px 8px;
+    background: linear-gradient(135deg, #141410 0%, #1a1a12 100%);
+    border: 1px solid rgba(200,169,110,0.25);
+    border-radius: 16px;
+    padding: 18px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.5s ease;
+    flex-shrink: 0;
+  }
+  .profile-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .pc-eyebrow {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #c8a96e;
+    margin-bottom: 6px;
+  }
+  .pc-type {
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: -0.5px;
+    margin-bottom: 4px;
+  }
+  .pc-desc {
+    font-size: 11px;
+    color: #888;
+    line-height: 1.6;
+    margin-bottom: 14px;
+  }
+  .pc-traits {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .pc-trait-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .pc-trait-label {
+    font-size: 10px;
+    color: #666;
+    width: 80px;
+    flex-shrink: 0;
+  }
+  .pc-trait-track {
+    flex: 1;
+    height: 3px;
+    background: #2a2a2a;
+    border-radius: 2px;
+    position: relative;
+  }
+  .pc-trait-fill {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #c8a96e, #e8c98e);
+  }
+  .pc-trait-ends {
+    display: flex;
+    justify-content: space-between;
+    font-size: 8px;
+    color: #3a3a3c;
+    margin-top: 2px;
+  }
+  .pc-note {
+    font-size: 10px;
+    color: #555;
+    border-top: 1px solid #222;
+    padding-top: 10px;
+    line-height: 1.6;
+    font-style: italic;
+  }
+  .pc-note strong { color: #888; font-style: normal; }
+
+  /* Utility */
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="index.html" class="nav-logo">Second Date</a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="INVESTOR_TEASER.html" class="nav-link">Teaser</a>
+    <a href="WHITEPAPER.html" class="nav-link">Whitepaper</a>
+    <a href="APP_MOCKUP.html" class="nav-link">App Mockup</a>
+    <a href="INTERVIEW_MOCKUP.html" class="nav-link active">Interview</a>
+  </div>
+</nav>
+
+<div class="page-label">
+  <div class="title">AI Onboarding Interview</div>
+  <div class="sub">No questionnaire. No profile. Just a conversation.</div>
+</div>
+
+<!-- PHONE -->
+<div class="phone">
+
+  <!-- Dynamic Island -->
+  <div class="dynamic-island">
+    <div class="island-camera"></div>
+  </div>
+
+  <!-- Status bar -->
+  <div class="status-bar">
+    <span class="sb-time">9:41</span>
+    <div class="sb-icons">
+      <span class="sb-icon">●●●</span>
+      <span class="sb-icon">WiFi</span>
+      <span class="sb-icon">⬜</span>
+    </div>
+  </div>
+
+  <div class="screen">
+
+    <!-- Chat header -->
+    <div class="chat-header">
+      <div class="chat-avatar">✦</div>
+      <div class="chat-header-info">
+        <div class="chat-name">Second Date AI</div>
+        <div class="chat-status" id="chat-header-status">Building your profile</div>
+      </div>
+      <div class="chat-header-right">PRIVATE</div>
+    </div>
+
+    <!-- Progress -->
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-top">
+        <span class="pb-label">Profile Depth</span>
+        <span class="pb-pct" id="pct-label">0%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+      </div>
+    </div>
+
+    <!-- Messages -->
+    <div class="messages" id="messages"></div>
+
+    <!-- Quick replies container -->
+    <div class="quick-replies hidden" id="quick-replies"></div>
+
+    <!-- Profile card (revealed at end) -->
+    <div class="profile-card hidden" id="profile-card">
+      <div class="pc-eyebrow">Your Profile · First Draft</div>
+      <div class="pc-type">The Grounded Explorer</div>
+      <div class="pc-desc">Independent, self-aware, and low-drama. You value depth over novelty but won't say no to midnight tacos. You know what drained you in the past — and you won't file it away again.</div>
+      <div class="pc-traits">
+        <div>
+          <div class="pc-trait-row">
+            <span class="pc-trait-label">Social energy</span>
+            <div class="pc-trait-track"><div class="pc-trait-fill" style="width:35%"></div></div>
+          </div>
+          <div class="pc-trait-ends"><span>Introvert</span><span>Extrovert</span></div>
+        </div>
+        <div>
+          <div class="pc-trait-row">
+            <span class="pc-trait-label">Attachment</span>
+            <div class="pc-trait-track"><div class="pc-trait-fill" style="width:65%"></div></div>
+          </div>
+          <div class="pc-trait-ends"><span>Avoidant</span><span>Anxious</span></div>
+        </div>
+        <div>
+          <div class="pc-trait-row">
+            <span class="pc-trait-label">Date style</span>
+            <div class="pc-trait-track"><div class="pc-trait-fill" style="width:25%"></div></div>
+          </div>
+          <div class="pc-trait-ends"><span>Low-key</span><span>Go all out</span></div>
+        </div>
+        <div>
+          <div class="pc-trait-row">
+            <span class="pc-trait-label">Pace</span>
+            <div class="pc-trait-track"><div class="pc-trait-fill" style="width:45%"></div></div>
+          </div>
+          <div class="pc-trait-ends"><span>Slow burn</span><span>Move fast</span></div>
+        </div>
+      </div>
+      <div class="pc-note">Profile sharpens after every date. <strong>Your match will never see this card</strong> — only the compatibility score it generates.</div>
+    </div>
+
+    <!-- Input -->
+    <div class="chat-input-wrap">
+      <input class="chat-input" id="chat-input" type="text" placeholder="Message..." autocomplete="off">
+      <button class="send-btn" id="send-btn" onclick="handleSend()">
+        <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+      </button>
+    </div>
+
+  </div>
+
+  <div class="home-indicator"></div>
+</div>
+
+<button class="restart-btn" onclick="restartInterview()">↺ Restart Interview</button>
+
+<script>
+// ── CONFIG ───────────────────────────────────────────────────────────────────
+const API_KEY_STORAGE = 'second_date_api_key';
+const MODEL = 'claude-sonnet-4-6';
+const MAX_TURNS = 11; // AI exchanges before it wraps up
+
+// ── SYSTEM PROMPT ────────────────────────────────────────────────────────────
+const SYSTEM_PROMPT = `You are the Second Date AI — the onboarding interviewer for a dating app called Second Date. Your job is to build a genuine psychological compatibility profile through natural conversation, not a questionnaire.
+
+Persona: Warm, perceptive, a little sassy. Like a smart friend who's really good at reading people. Never clinical, never therapist-y. Think: matchmaker who actually cares.
+
+Core rules:
+- Ask behavioral questions about real past experiences — not hypotheticals or stated preferences. "Tell me about the last time..." beats "Do you prefer..."
+- Always acknowledge what they said before moving on. Briefly. Then ask the next thing.
+- One question at a time. Never stack two questions.
+- Keep messages short — 2-4 sentences max. This is a phone chat.
+- Never judge or interpret their answers out loud. Just learn.
+- Never use the word "compatibility" or sound like a personality test.
+
+Cover these areas naturally over the course of the conversation (not in this exact order):
+1. What energizes them in connection — a recent positive experience with someone
+2. What drains them — a recent experience that felt off or uncomfortable
+3. Lifestyle and real weekend rhythms (not aspirational)
+4. Alone time needs and how they recharge
+5. Neediness / attachment — how they respond when someone they like goes quiet
+6. How they show interest — what changes about them when they're into someone
+7. Hidden dealbreakers — things they say don't matter but actually do
+8. Hidden requirements — things they don't realize are non-negotiable
+9. Self-awareness about past patterns — what they ignored early on
+10. Phone behavior — for in-date behavioral matching
+
+After covering most of these areas (around 9–11 user turns), wrap up warmly. Your final message should feel like a natural close — something like "That's everything I need." End that final message with the exact token [[PROFILE_READY]] on its own line. Do not explain what it is. It will not be shown to the user.`;
+
+// ── STATE ────────────────────────────────────────────────────────────────────
+let conversationHistory = []; // [{role:'user'|'assistant', content:'...'}]
+let turnCount = 0;
+let waiting = false;
+let apiKey = localStorage.getItem(API_KEY_STORAGE) || '';
+
+const messagesEl = document.getElementById('messages');
+const progressFill = document.getElementById('progress-fill');
+const pctLabel = document.getElementById('pct-label');
+const chatInput = document.getElementById('chat-input');
+
+// ── UI HELPERS ────────────────────────────────────────────────────────────────
+function scrollBottom() {
+  setTimeout(() => messagesEl.scrollTop = messagesEl.scrollHeight, 60);
+}
+
+function setProgress(pct) {
+  progressFill.style.width = Math.min(pct, 100) + '%';
+  pctLabel.textContent = Math.min(pct, 100) + '%';
+}
+
+function addTimestamp(text) {
+  const el = document.createElement('div');
+  el.className = 'ts';
+  el.textContent = text;
+  messagesEl.appendChild(el);
+}
+
+function showTyping() {
+  const row = document.createElement('div');
+  row.className = 'typing-row';
+  row.id = 'typing-indicator';
+  row.innerHTML = `
+    <div class="bubble-avatar" style="font-size:12px">✦</div>
+    <div class="typing-bubble">
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+    </div>`;
+  messagesEl.appendChild(row);
+  scrollBottom();
+}
+
+function removeTyping() {
+  const t = document.getElementById('typing-indicator');
+  if (t) t.remove();
+}
+
+function addBubble(type, text) {
+  const row = document.createElement('div');
+  row.className = `bubble-row ${type}`;
+  if (type === 'ai') {
+    row.innerHTML = `
+      <div class="bubble-avatar">✦</div>
+      <div class="bubble ai">${text.replace(/\n/g, '<br>')}</div>`;
+  } else {
+    row.innerHTML = `<div class="bubble user">${text}</div>`;
+  }
+  messagesEl.appendChild(row);
+  scrollBottom();
+}
+
+function addInsightPill(text) {
+  const pill = document.createElement('div');
+  pill.className = 'insight-pill';
+  pill.innerHTML = `<strong>${text}</strong>`;
+  messagesEl.appendChild(pill);
+  scrollBottom();
+  setTimeout(() => pill.classList.add('visible'), 80);
+}
+
+function setInputState(enabled, placeholder) {
+  chatInput.disabled = !enabled;
+  chatInput.placeholder = placeholder || 'Message...';
+  if (enabled) setTimeout(() => chatInput.focus(), 100);
+}
+
+// ── API KEY SETUP ─────────────────────────────────────────────────────────────
+function promptForKey() {
+  // Inject a simple key-entry screen into the messages area
+  messagesEl.innerHTML = '';
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'padding:20px 16px; display:flex; flex-direction:column; gap:12px; align-items:center; text-align:center; flex:1;';
+  wrap.innerHTML = `
+    <div style="font-size:28px; margin-bottom:4px;">✦</div>
+    <div style="font-size:14px; font-weight:600; color:#fff;">One thing first</div>
+    <div style="font-size:12px; color:#666; line-height:1.6;">Enter your Anthropic API key to power the interview. It's stored only on this device.</div>
+    <input id="key-input" type="password" placeholder="sk-ant-..." style="
+      width:100%; background:#1c1c1e; border:1px solid #2c2c2e; border-radius:12px;
+      padding:12px 16px; font-size:13px; color:#e8e8ed; outline:none;
+      font-family:'Inter',sans-serif; caret-color:#c8a96e;">
+    <button onclick="saveKey()" style="
+      width:100%; background:#c8a96e; color:#000; font-weight:700; font-size:12px;
+      letter-spacing:1px; text-transform:uppercase; border:none; border-radius:24px;
+      padding:13px; cursor:pointer; font-family:'Inter',sans-serif;">
+      Let's Go
+    </button>
+    <div style="font-size:10px; color:#3a3a3c;">Key never leaves your browser</div>`;
+  messagesEl.appendChild(wrap);
+  setInputState(false, 'Enter your API key above...');
+  setTimeout(() => document.getElementById('key-input')?.focus(), 200);
+}
+
+function saveKey() {
+  const input = document.getElementById('key-input');
+  const val = input?.value.trim();
+  if (!val || !val.startsWith('sk-')) {
+    input.style.borderColor = '#ef4444';
+    return;
+  }
+  apiKey = val;
+  localStorage.setItem(API_KEY_STORAGE, val);
+  messagesEl.innerHTML = '';
+  startInterview();
+}
+
+// ── CLAUDE API CALL ───────────────────────────────────────────────────────────
+async function callClaude(messages, systemOverride) {
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'x-api-key': apiKey,
+      'anthropic-version': '2023-06-01',
+      'content-type': 'application/json',
+      'anthropic-dangerous-direct-browser-access': 'true'
+    },
+    body: JSON.stringify({
+      model: MODEL,
+      max_tokens: 400,
+      system: systemOverride || SYSTEM_PROMPT,
+      messages
+    })
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err?.error?.message || `API error ${res.status}`);
+  }
+  const data = await res.json();
+  return data.content[0].text;
+}
+
+// ── PROFILE GENERATION ────────────────────────────────────────────────────────
+async function generateProfile() {
+  document.getElementById('chat-header-status').textContent = 'Analyzing...';
+
+  const transcript = conversationHistory
+    .map(m => `${m.role === 'user' ? 'User' : 'AI'}: ${m.content}`)
+    .join('\n');
+
+  const profilePrompt = `Based on this onboarding interview, generate a compatibility profile. Return ONLY valid JSON — no markdown, no explanation, just the JSON object.
+
+{
+  "type": "3–4 word evocative label for this person's dating archetype (e.g. 'The Grounded Explorer')",
+  "description": "2–3 sentences. Behavioral and specific to what they actually said. Warm, honest, a little insightful.",
+  "traits": {
+    "social_energy": <integer 0–100, 0=strong introvert, 100=strong extrovert>,
+    "attachment": <integer 0–100, 0=avoidant, 100=anxious>,
+    "date_style": <integer 0–100, 0=low-key/casual, 100=elaborate/go all out>,
+    "pace": <integer 0–100, 0=slow burn, 100=moves fast>
+  },
+  "insight": "One sentence. Something they probably don't fully realize about themselves from what they shared."
+}
+
+Interview transcript:
+${transcript}`;
+
+  try {
+    const raw = await callClaude(
+      [{ role: 'user', content: profilePrompt }],
+      'You generate JSON compatibility profiles from dating app interview transcripts. Return only valid JSON, nothing else.'
+    );
+    return JSON.parse(raw.trim());
+  } catch (e) {
+    console.error('Profile generation failed:', e);
+    return null;
+  }
+}
+
+function renderProfileCard(profile) {
+  if (!profile) return;
+  const card = document.getElementById('profile-card');
+  card.querySelector('.pc-type').textContent = profile.type;
+  card.querySelector('.pc-desc').textContent = profile.description;
+  card.querySelector('.pc-note').innerHTML =
+    `${profile.insight} <strong style="display:block;margin-top:6px;">Your match will never see this — only the score it generates.</strong>`;
+
+  const fills = card.querySelectorAll('.pc-trait-fill');
+  if (fills.length >= 4) {
+    fills[0].style.width = profile.traits.social_energy + '%';
+    fills[1].style.width = profile.traits.attachment + '%';
+    fills[2].style.width = profile.traits.date_style + '%';
+    fills[3].style.width = profile.traits.pace + '%';
+  }
+
+  card.classList.remove('hidden');
+  setTimeout(() => card.classList.add('visible'), 50);
+  document.getElementById('chat-header-status').textContent = 'Profile complete';
+  scrollBottom();
+}
+
+// ── SEND & RECEIVE ────────────────────────────────────────────────────────────
+async function sendMessage(userText) {
+  if (waiting) return;
+  waiting = true;
+  setInputState(false, 'Second Date is thinking...');
+
+  // Add user message to history and UI
+  conversationHistory.push({ role: 'user', content: userText });
+  turnCount++;
+
+  // Progress: ramps from 8% per turn up to 95% max before profile
+  setProgress(Math.min(Math.round((turnCount / MAX_TURNS) * 95), 95));
+
+  showTyping();
+
+  try {
+    // Tell AI it's the last question after MAX_TURNS
+    const messages = [...conversationHistory];
+    if (turnCount >= MAX_TURNS) {
+      messages[messages.length - 1] = {
+        role: 'user',
+        content: userText + '\n\n[This is the last user response. Wrap up the conversation warmly and end your message with [[PROFILE_READY]] on its own line.]'
+      };
+    }
+
+    const reply = await callClaude(messages);
+
+    // Check if the AI is done
+    const isDone = reply.includes('[[PROFILE_READY]]');
+    const cleanReply = reply.replace(/\[\[PROFILE_READY\]\]/g, '').trim();
+
+    conversationHistory.push({ role: 'assistant', content: cleanReply });
+
+    removeTyping();
+    addBubble('ai', cleanReply);
+
+    // Generate insight pill from AI's perspective every 2 turns
+    if (turnCount % 2 === 0 && !isDone) {
+      const insightReply = await callClaude(
+        [...conversationHistory, {
+          role: 'user',
+          content: 'In 8 words or fewer, what is the single most specific thing you just learned about this person? Start with a star symbol ★ and a two-letter code like [SE] social energy, [AT] attachment, [LS] lifestyle, [AT] alone time, [DS] date style. Just the insight, no preamble.'
+        }],
+        'You generate ultra-short profile insight labels from dating interview exchanges. 8 words max. Always start with ★ and a code like [SE].'
+      );
+      addInsightPill(insightReply.trim());
+    }
+
+    if (isDone) {
+      setInputState(false, 'Building your profile...');
+      document.getElementById('send-btn').style.opacity = '0.3';
+      document.getElementById('send-btn').style.pointerEvents = 'none';
+      setProgress(100);
+      setTimeout(async () => {
+        const profile = await generateProfile();
+        renderProfileCard(profile);
+      }, 800);
+    } else {
+      waiting = false;
+      setInputState(true, 'Message...');
+    }
+
+  } catch (err) {
+    removeTyping();
+    addBubble('ai', `Something went wrong: ${err.message}. Check your API key and try again.`);
+    waiting = false;
+    setInputState(true, 'Message...');
+  }
+}
+
+function handleSend() {
+  const text = chatInput.value.trim();
+  if (!text || waiting) return;
+  chatInput.value = '';
+  addBubble('user', text);
+  sendMessage(text);
+}
+
+chatInput.addEventListener('keydown', e => {
+  if (e.key === 'Enter') handleSend();
+});
+
+document.getElementById('send-btn').onclick = handleSend;
+
+// ── PROFILE CARD REVEAL ───────────────────────────────────────────────────────
+function showProfileCard() {
+  const card = document.getElementById('profile-card');
+  card.classList.remove('hidden');
+  setTimeout(() => card.classList.add('visible'), 50);
+  scrollBottom();
+}
+
+// ── START & RESTART ───────────────────────────────────────────────────────────
+async function startInterview() {
+  waiting = true;
+  setInputState(false, 'Second Date is typing...');
+  addTimestamp('Today · Getting Started');
+  showTyping();
+
+  try {
+    // Kick off with no user message — AI opens cold
+    const opening = await callClaude([{
+      role: 'user',
+      content: '[The user just opened the app for the first time. Send your opening message to begin the interview.]'
+    }]);
+    conversationHistory = [{ role: 'assistant', content: opening }];
+    removeTyping();
+    addBubble('ai', opening);
+    waiting = false;
+    setInputState(true, 'Message...');
+  } catch (err) {
+    removeTyping();
+    if (err.message.includes('401') || err.message.includes('invalid')) {
+      localStorage.removeItem(API_KEY_STORAGE);
+      apiKey = '';
+      messagesEl.innerHTML = '';
+      addBubble('ai', 'That API key didn\'t work. Let\'s try again.');
+      setTimeout(promptForKey, 800);
+    } else {
+      addBubble('ai', `Couldn't connect: ${err.message}`);
+      waiting = false;
+      setInputState(true, 'Try again...');
+    }
+  }
+}
+
+function restartInterview() {
+  conversationHistory = [];
+  turnCount = 0;
+  waiting = false;
+  messagesEl.innerHTML = '';
+  chatInput.value = '';
+  document.getElementById('send-btn').style.opacity = '1';
+  document.getElementById('send-btn').style.pointerEvents = 'auto';
+  document.getElementById('chat-header-status').textContent = 'Building your profile';
+  const card = document.getElementById('profile-card');
+  card.classList.add('hidden');
+  card.classList.remove('visible');
+  setProgress(0);
+  setTimeout(startInterview, 300);
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+if (!apiKey) {
+  promptForKey();
+} else {
+  startInterview();
+}
+</script>
+</body>
+</html>

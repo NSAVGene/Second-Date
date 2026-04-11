@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Second Date — App UI Mockup</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background: #080808;
+    color: #fff;
+    padding: 60px 40px;
+  }
+
+  /* PAGE HEADER */
+  .page-header {
+    text-align: center;
+    margin-bottom: 80px;
+  }
+  .page-header .app-name {
+    font-size: 48px;
+    font-weight: 200;
+    letter-spacing: -2px;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .page-header .app-sub {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #c8a96e;
+  }
+
+  /* SECTION LABEL */
+  .section {
+    margin-bottom: 80px;
+  }
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #444;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+  .phones-row {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+
+  /* PHONE FRAME */
+  .phone {
+    width: 280px;
+    height: 580px;
+    background: #111;
+    border-radius: 40px;
+    border: 2px solid #222;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05);
+    flex-shrink: 0;
+  }
+  .phone.wide {
+    width: 320px;
+  }
+  /* Notch */
+  .phone::before {
+    content: '';
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 22px;
+    background: #080808;
+    border-radius: 20px;
+    z-index: 10;
+  }
+  .phone-screen {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* STATUS BAR */
+  .status-bar {
+    padding: 16px 24px 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 10px;
+    color: #666;
+    flex-shrink: 0;
+  }
+  .status-bar .time { font-weight: 600; font-size: 11px; color: #aaa; }
+  .status-bar .icons { display: flex; gap: 4px; align-items: center; }
+
+  /* SCREEN LABEL */
+  .screen-label {
+    text-align: center;
+    margin-top: 12px;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #555;
+  }
+
+  /* ============ SCREEN STYLES ============ */
+
+  /* SPLASH */
+  .splash {
+    background: #0a0a0a;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 28px;
+    text-align: center;
+  }
+  .splash .logo {
+    font-size: 36px;
+    font-weight: 200;
+    letter-spacing: -1px;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .splash .logo-sub {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #c8a96e;
+    margin-bottom: 40px;
+  }
+  .splash .mission {
+    font-size: 14px;
+    color: #888;
+    line-height: 1.7;
+    font-style: italic;
+    margin-bottom: 50px;
+    font-family: Georgia, serif;
+  }
+  .btn-primary {
+    background: #c8a96e;
+    color: #000;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 14px 32px;
+    border-radius: 30px;
+    border: none;
+    width: 100%;
+    margin-bottom: 12px;
+  }
+  .btn-ghost {
+    background: transparent;
+    color: #555;
+    font-size: 11px;
+    letter-spacing: 1px;
+    padding: 12px;
+    border: none;
+    width: 100%;
+  }
+
+  /* AI INTERVIEW */
+  .interview {
+    background: #0d0d0d;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+  }
+  .chat-header {
+    padding: 20px 20px 12px;
+    border-bottom: 1px solid #1a1a1a;
+    flex-shrink: 0;
+  }
+  .chat-header .ai-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+  }
+  .chat-header .ai-sub {
+    font-size: 10px;
+    color: #c8a96e;
+    margin-top: 2px;
+  }
+  .chat-messages {
+    flex: 1;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow: hidden;
+  }
+  .msg {
+    max-width: 85%;
+    padding: 10px 14px;
+    border-radius: 16px;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .msg.ai {
+    background: #1a1a1a;
+    color: #ccc;
+    border-radius: 16px 16px 16px 4px;
+    align-self: flex-start;
+  }
+  .msg.user {
+    background: #c8a96e;
+    color: #000;
+    font-weight: 500;
+    border-radius: 16px 16px 4px 16px;
+    align-self: flex-end;
+  }
+  .typing {
+    display: flex;
+    gap: 3px;
+    padding: 10px 14px;
+    background: #1a1a1a;
+    border-radius: 16px 16px 16px 4px;
+    width: fit-content;
+    align-self: flex-start;
+  }
+  .typing span {
+    width: 5px;
+    height: 5px;
+    background: #555;
+    border-radius: 50%;
+    animation: pulse 1.2s infinite;
+  }
+  .typing span:nth-child(2) { animation-delay: 0.2s; }
+  .typing span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes pulse { 0%,60%,100%{opacity:0.3} 30%{opacity:1} }
+  .chat-input {
+    padding: 10px 16px 20px;
+    border-top: 1px solid #1a1a1a;
+    flex-shrink: 0;
+  }
+  .chat-input-bar {
+    background: #1a1a1a;
+    border-radius: 20px;
+    padding: 10px 16px;
+    font-size: 11px;
+    color: #444;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .send-btn {
+    width: 24px;
+    height: 24px;
+    background: #c8a96e;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+  }
+
+  /* SWIPE */
+  .swipe-screen {
+    background: #0a0a0a;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+  }
+  .swipe-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    flex-shrink: 0;
+  }
+  .swipe-header .sh-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+  }
+  .swipe-header .sh-sub {
+    font-size: 9px;
+    color: #555;
+    margin-top: 2px;
+  }
+  .swipe-header .sh-count {
+    font-size: 11px;
+    color: #c8a96e;
+  }
+  .swipe-progress {
+    height: 2px;
+    background: #1a1a1a;
+    border-radius: 2px;
+    margin-bottom: 16px;
+    flex-shrink: 0;
+  }
+  .swipe-progress-fill {
+    height: 100%;
+    width: 34%;
+    background: linear-gradient(90deg, #c8a96e, #e8c98e);
+    border-radius: 2px;
+  }
+  .swipe-card {
+    flex: 1;
+    background: #1a1a1a;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 16px;
+  }
+  .swipe-card-img {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1e1e2e 0%, #2a1a2a 50%, #1a2a1a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .swipe-card-img .person-silhouette {
+    width: 100px;
+    height: 140px;
+    background: linear-gradient(180deg, #333 0%, #222 100%);
+    border-radius: 50px 50px 20px 20px;
+    opacity: 0.4;
+  }
+  .swipe-actions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-shrink: 0;
+  }
+  .swipe-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    border: 2px solid;
+  }
+  .swipe-btn.no { border-color: #f44336; background: rgba(244,67,54,0.1); }
+  .swipe-btn.yes { border-color: #c8a96e; background: rgba(200,169,110,0.1); }
+  .swipe-insight {
+    margin-top: 12px;
+    padding: 8px 12px;
+    background: #1a1a1a;
+    border-radius: 10px;
+    font-size: 9px;
+    color: #555;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .swipe-insight span { color: #c8a96e; }
+
+  /* MATCH REVEAL */
+  .match-screen {
+    background: #080808;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+  }
+  .match-label {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #c8a96e;
+    margin-bottom: 20px;
+    margin-top: 10px;
+  }
+  .match-avatars {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2a2a3a, #1a1a2a);
+    border: 2px solid #222;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+  }
+  .match-heart {
+    font-size: 20px;
+    color: #c8a96e;
+  }
+  .match-title {
+    font-size: 22px;
+    font-weight: 300;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+  .match-sub {
+    font-size: 11px;
+    color: #555;
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+  .compat-bar-wrap {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .compat-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 9px;
+    color: #555;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .compat-bar {
+    height: 4px;
+    background: #1a1a1a;
+    border-radius: 4px;
+    margin-bottom: 8px;
+  }
+  .compat-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #c8a96e, #e8c98e);
+  }
+  .match-note {
+    background: #141414;
+    border: 1px solid #1e1e1e;
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-size: 11px;
+    color: #777;
+    line-height: 1.5;
+    margin-bottom: 16px;
+    text-align: left;
+    width: 100%;
+  }
+  .match-note .note-label {
+    font-size: 8px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #c8a96e;
+    margin-bottom: 6px;
+  }
+  .match-cta {
+    background: #c8a96e;
+    color: #000;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 13px;
+    border-radius: 25px;
+    width: 100%;
+  }
+
+  /* VIDEO CALL */
+  .video-screen {
+    background: #050505;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .video-main {
+    flex: 1;
+    background: linear-gradient(160deg, #0d0d1a 0%, #0a1a0a 100%);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .video-self {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    width: 64px;
+    height: 84px;
+    background: #1a1a1a;
+    border-radius: 10px;
+    border: 2px solid #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+  .video-person {
+    font-size: 48px;
+    opacity: 0.3;
+  }
+  .video-name {
+    position: absolute;
+    bottom: 20px;
+    left: 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #fff;
+  }
+  .video-name span {
+    display: block;
+    font-size: 9px;
+    color: #c8a96e;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .video-controls {
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    background: #0a0a0a;
+    flex-shrink: 0;
+  }
+  .vc-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    background: #1a1a1a;
+    border: 1px solid #222;
+  }
+  .vc-btn.end { background: #f44336; border-color: #f44336; }
+  .video-unlock-bar {
+    padding: 12px 16px;
+    background: #0d0d0d;
+    border-top: 1px solid #1a1a1a;
+    flex-shrink: 0;
+  }
+  .unlock-progress {
+    height: 3px;
+    background: #1a1a1a;
+    border-radius: 3px;
+    margin-bottom: 8px;
+  }
+  .unlock-fill {
+    height: 100%;
+    width: 60%;
+    background: linear-gradient(90deg, #c8a96e, #e8c98e);
+    border-radius: 3px;
+  }
+  .unlock-text {
+    font-size: 9px;
+    color: #555;
+    text-align: center;
+    letter-spacing: 1px;
+  }
+  .unlock-text span { color: #c8a96e; }
+
+  /* VENUE UNLOCK */
+  .venue-screen {
+    background: #080808;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    text-align: center;
+  }
+  .congrats {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #c8a96e;
+    margin-bottom: 16px;
+  }
+  .congrats-title {
+    font-size: 20px;
+    font-weight: 300;
+    color: #fff;
+    line-height: 1.4;
+    margin-bottom: 6px;
+  }
+  .congrats-sub {
+    font-size: 12px;
+    color: #555;
+    margin-bottom: 28px;
+    font-style: italic;
+  }
+  .venue-card {
+    width: 100%;
+    background: #141414;
+    border: 1px solid #c8a96e33;
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 16px;
+    text-align: left;
+  }
+  .venue-card .vc-label {
+    font-size: 8px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #c8a96e;
+    margin-bottom: 8px;
+  }
+  .venue-card .vc-name {
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+  .venue-card .vc-detail {
+    font-size: 10px;
+    color: #555;
+    margin-bottom: 10px;
+  }
+  .venue-badge {
+    display: inline-block;
+    background: rgba(200,169,110,0.15);
+    border: 1px solid #c8a96e55;
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 9px;
+    color: #c8a96e;
+    letter-spacing: 1px;
+  }
+  .home-by-row {
+    width: 100%;
+    background: #141414;
+    border: 1px solid #1e1e1e;
+    border-radius: 12px;
+    padding: 12px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  .home-by-row .hb-label {
+    font-size: 10px;
+    color: #555;
+  }
+  .home-by-row .hb-value {
+    font-size: 12px;
+    color: #c8a96e;
+    font-weight: 500;
+  }
+
+  /* DATE CONCIERGE */
+  .concierge-screen {
+    background: #0a0a0a;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+  }
+  .con-header {
+    margin-bottom: 16px;
+    flex-shrink: 0;
+  }
+  .con-header .ch-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+  }
+  .con-header .ch-sub {
+    font-size: 10px;
+    color: #555;
+    margin-top: 2px;
+  }
+  .con-card {
+    background: #141414;
+    border: 1px solid #1e1e1e;
+    border-radius: 14px;
+    padding: 14px;
+    margin-bottom: 10px;
+    flex-shrink: 0;
+  }
+  .con-card .cc-label {
+    font-size: 8px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #555;
+    margin-bottom: 6px;
+  }
+  .con-card .cc-value {
+    font-size: 13px;
+    color: #fff;
+    font-weight: 500;
+  }
+  .con-card .cc-sub {
+    font-size: 10px;
+    color: #555;
+    margin-top: 2px;
+  }
+  .con-card.highlight { border-color: #c8a96e44; }
+  .con-card.highlight .cc-value { color: #c8a96e; }
+  .late-banner {
+    background: rgba(200,169,110,0.08);
+    border: 1px solid #c8a96e33;
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    flex-shrink: 0;
+  }
+  .late-banner .lb-title {
+    font-size: 11px;
+    color: #c8a96e;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .late-banner .lb-body {
+    font-size: 10px;
+    color: #777;
+    line-height: 1.4;
+  }
+  .action-row {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+    margin-top: auto;
+  }
+  .action-btn {
+    flex: 1;
+    padding: 12px 8px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-align: center;
+  }
+  .action-btn.leave { background: #1a1a1a; color: #aaa; border: 1px solid #222; }
+  .action-btn.stay { background: #c8a96e; color: #000; }
+
+  /* SAFETY */
+  .safety-screen {
+    background: #0a0a0a;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 20px;
+    text-align: center;
+  }
+  .safety-icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+    margin-top: 16px;
+  }
+  .safety-title {
+    font-size: 18px;
+    font-weight: 300;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+  .safety-sub {
+    font-size: 11px;
+    color: #555;
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+  .safety-who {
+    font-size: 11px;
+    color: #c8a96e;
+    margin-bottom: 28px;
+  }
+  .safety-btns {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+    margin-bottom: 24px;
+  }
+  .safety-btn {
+    flex: 1;
+    height: 90px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    border: 2px solid;
+  }
+  .safety-btn.green {
+    background: rgba(76,175,80,0.15);
+    border-color: #4caf50;
+  }
+  .safety-btn.red {
+    background: rgba(244,67,54,0.15);
+    border-color: #f44336;
+  }
+  .safety-labels {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .safety-labels span {
+    flex: 1;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+  }
+  .safety-labels .gl { color: #4caf50; }
+  .safety-labels .rl { color: #f44336; }
+  .safety-info {
+    font-size: 9px;
+    color: #333;
+    line-height: 1.6;
+  }
+  .safety-timer {
+    margin-top: 12px;
+    font-size: 28px;
+    font-weight: 200;
+    color: #c8a96e;
+  }
+  .safety-timer-label {
+    font-size: 9px;
+    color: #444;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* PDR */
+  .pdr-screen {
+    background: #0a0a0a;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+  }
+  .pdr-header {
+    padding: 16px 18px 12px;
+    border-bottom: 1px solid #1a1a1a;
+    flex-shrink: 0;
+  }
+  .pdr-header .ph-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+  }
+  .pdr-header .ph-sub {
+    font-size: 9px;
+    color: #c8a96e;
+    letter-spacing: 1px;
+    margin-top: 2px;
+  }
+  .pdr-messages {
+    flex: 1;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow: hidden;
+  }
+  .pdr-question {
+    background: #141414;
+    border-radius: 14px 14px 14px 4px;
+    padding: 10px 12px;
+    font-size: 11px;
+    color: #bbb;
+    line-height: 1.4;
+    align-self: flex-start;
+    max-width: 85%;
+  }
+  .pdr-answer {
+    background: #c8a96e;
+    border-radius: 14px 14px 4px 14px;
+    padding: 10px 12px;
+    font-size: 11px;
+    color: #000;
+    font-weight: 500;
+    line-height: 1.4;
+    align-self: flex-end;
+    max-width: 85%;
+  }
+  .pdr-insight {
+    background: #0d1a0d;
+    border: 1px solid #1a3a1a;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 10px;
+    color: #6a9a6a;
+    line-height: 1.4;
+    align-self: stretch;
+    flex-shrink: 0;
+    margin: 0 14px;
+  }
+  .pdr-insight .pi-label {
+    font-size: 8px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #4caf50;
+    margin-bottom: 4px;
+  }
+  .pdr-footer {
+    padding: 12px 14px 20px;
+    flex-shrink: 0;
+  }
+  .pdr-rematch {
+    background: linear-gradient(135deg, #c8a96e, #e8c98e);
+    color: #000;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 13px;
+    border-radius: 25px;
+    width: 100%;
+    text-align: center;
+  }
+
+  /* DIVIDER */
+  .section-divider {
+    text-align: center;
+    padding: 20px 0 60px;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #222;
+  }
+
+  /* NAV BAR */
+  .site-nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: rgba(8,8,8,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    height: 52px;
+  }
+  .site-nav .nav-logo {
+    font-size: 16px;
+    font-weight: 200;
+    letter-spacing: -0.5px;
+    color: #fff;
+    text-decoration: none;
+  }
+  .site-nav .nav-links {
+    display: flex;
+    gap: 6px;
+  }
+  .site-nav .nav-link {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #999;
+    text-decoration: none;
+    padding: 6px 14px;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+  }
+  .site-nav .nav-link:hover { color: #fff; }
+  .site-nav .nav-link.active { color: #c8a96e; }
+  .nav-spacer { height: 52px; }
+
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="index.html" class="nav-logo">Second Date</a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="INVESTOR_TEASER.html" class="nav-link">Teaser</a>
+    <a href="WHITEPAPER.html" class="nav-link">Whitepaper</a>
+    <a href="APP_MOCKUP.html" class="nav-link active">App Mockup</a>
+  </div>
+</nav>
+<div class="nav-spacer"></div>
+
+<div class="page-header">
+  <div class="app-name">Second Date</div>
+  <div class="app-sub">App UI — Concept Mockup 2026</div>
+</div>
+
+<!-- ROW 1: ONBOARDING -->
+<div class="section">
+  <div class="section-label">01 — Onboarding</div>
+  <div class="phones-row">
+
+    <!-- SPLASH -->
+    <div>
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="status-bar">
+            <span class="time">9:41</span>
+            <div class="icons">▲▲▲</div>
+          </div>
+          <div class="splash">
+            <div class="logo">Second Date</div>
+            <div class="logo-sub">Stop Guessing. Start Connecting.</div>
+            <div class="mission">"Nobody should have to pretend to be someone they're not to find love."</div>
+            <button class="btn-primary">Get Started</button>
+            <button class="btn-ghost">I have an account</button>
+          </div>
+        </div>
+      </div>
+      <div class="screen-label">Welcome</div>
+    </div>
+
+    <!-- AI INTERVIEW -->
+    <div>
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="status-bar">
+            <span class="time">9:41</span>
+            <div class="icons">▲▲▲</div>
+          </div>
+          <div class="interview">
+            <div class="chat-header">
+              <div class="ai-name">Second Date AI</div>
+              <div class="ai-sub">Your personal matchmaker</div>
+            </div>
+            <div class="chat-messages">
+              <div class="msg ai">Hi. No forms here. Just a conversation. Tell me — what did your last relationship teach you about what you actually need?</div>
+              <div class="msg user">That I need someone who actually shows up. Not just when it's convenient.</div>
+              <div class="msg ai">That's important. Do you feel like you've been the one showing up more, or that you've struggled to let people in?</div>
+              <div class="msg user">Both, honestly.</div>
+              <div class="typing"><span></span><span></span><span></span></div>
+            </div>
+            <div class="chat-input">
+              <div class="chat-input-bar">
+                <span>Type something...</span>
+                <div class="send-btn">↑</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="screen-label">AI Interview</div>
+    </div>
+
+    <!-- SWIPE TYPE LEARNING -->
+    <div>
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="status-bar">
+            <span class="time">9:41</span>
+            <div class="icons">▲▲▲</div>
+          </div>
+          <div class="swipe-screen">
+            <div class="swipe-header">
+              <div>
+                <div class="sh-title">Just React</div>
+                <div class="sh-sub">No categories. No pressure.</div>
+              </div>
+              <div class="sh-count">34 / 100</div>
+            </div>
+            <div class="swipe-progress">
+              <div class="swipe-progress-fill"></div>
+            </div>
+            <div class="swipe-card">
+              <div class="swipe-card-img">
+                <div class="person-silhouette"></div>
+              </div>
+            </div>
+            <div class="swipe-actions">
+              <div class="swipe-btn no">✕</div>
+              <div class="swipe-btn yes">♥</div>
+            </div>
+            <div class="swipe-insight">Pattern forming — <span>66 more swipes</span> to unlock your profile</div>
+          </div>
+        </div>
+      </div>
+      <div class="screen-label">Type Learning</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="section-divider">· · ·</div>
+
+<!-- ROW 2: THE MATCH -->
+<div class="section">
+  <div class="section-label">02 — The Match</div>
+  <div class="phones-row">
+
+    <!-- MATCH REVEAL -->
+    <div>
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="status-bar">
+            <span class="time">9:41</span>
+            <div class="icons">▲▲▲</div>
+          </div>
+          <div class="match-screen">
+            <div class="match-label">We Found Someone</div>
+            <div class="match-avatars">
+              <div class="avatar">👤</div>
+              <div class="match-heart">♥</div>
+              <div class="avatar">👤</div>
+            </div>
+            <div class="match-title">Meet Jordan, 31</div>
+            <div class="match-sub">Our AIs already talked.<br>Here's what they found.</div>
+            <div class="compat-bar-wrap">
+              <div class="compat-label"><span>Values</span><span>94%</span></div>
+              <div class="compat-bar"><div class="compat-fill" style="width:94%"></div></div>
+              <div class="compat-label"><span>Communication Style</span><span>88%</span></div>
+              <div class="compat-bar"><div class="compat-fill" style="width:88%"></div></div>
+              <div class="compat-label"><span>What You Both Need</span><span>91%</span></div>
+              <div class="compat-bar"><div class="compat-fill" style="width:91%"></div></div>
+            </div>
+            <div class="match-note">
+              <div class="note-label">AI Note</div>
+              Jordan's last three dates flagged a need for someone more consistent. That's exactly what your profile reflects.
+            </div>
+            <div class="match-cta">Start Your First Date →</div>
+          </div>
+        </div>
+      </div>
+      <div class="screen-label">Match Reveal</div>
+    </div>
+
+    <!-- VIDEO CALL -->
+    <div>
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="status-bar">
+            <span class="time">9:41</span>
+            <div class="icons">▲▲▲</div>
+          </div>
+          <div class="video-screen">
+            <div class="video-main">
+              <div class="video-person">👤</div>
+              <div class="video-self">😊</div>
+              <div class="video-name">
+                Jordan
+                <span>Your First Date</span>
+              </div>
+            </div>
+            <div class="video-controls">
+              <div class="vc-btn">🔇</div>
+              <div class="vc-btn end">✕</div>
+              <div class="vc-btn">📷</div>
+            </div>
+            <div class="video-unlock-bar">
+              <div class="unlock-progress">
+                <div class="unlock-fill"></div>
+              </div>
+              <div class="unlock-text">Keep talking — venue unlocks <span>when you're both ready</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="screen-label">Your First Date (Video)</div>
+    </div>
+
+    <!-- VENUE UNLOCK -->
+    <div>
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="status-bar">
+            <span class="time">9:41</span>
+            <div class="icons">▲▲▲</div>
+          </div>
+          <div class="venue-screen">
+            <div class="congrats">Congratulations</div>
+            <div class="congrats-title">You just had your first date.</div>
+            <div class="congrats-sub">Now let's plan the second one.</div>
+            <div class="venue-card">
+              <div class="vc-label">Your Second Date</div>
+              <div class="vc-name">Skybar Rooftop</div>
+              <div class="vc-detail">Saturday · 7:30pm · West Hollywood</div>
+              <div class="venue-badge">Second Date Certified ✓</div>
+            </div>
+            <div class="home-by-row">
+              <span class="hb-label">Home by</span>
+              <span class="hb-value">11:00 PM ›</span>
+            </div>
+            <div class="match-cta">Confirm Date</div>
+          </div>
+        </div>
+      </div>
+      <div class="screen-label">Venue Unlock</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="section-divider">· · ·</div>
+
+<!-- ROW 3: DATE NIGHT + SAFETY + PDR -->
+<div class="section">
+  <div class="section-label">03 — The Date</div>
+  <div class="phones-row">
+
+    <!-- DATE CONCIERGE -->
+    <div>
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="status-bar">
+            <span class="time">7:22</span>
+            <div class="icons">▲▲▲</div>
+          </div>
+          <div class="concierge-screen">
+            <div class="con-header">
+              <div class="ch-title">Date Night</div>
+              <div class="ch-sub">Sat, April 12 · Skybar Rooftop</div>
+            </div>
+            <div class="con-card">
+              <div class="cc-label">Meeting</div>
+              <div class="cc-value">Jordan, 31</div>
+              <div class="cc-sub">Confirmed · 7:30 PM</div>
+            </div>
+            <div class="late-banner">
+              <div class="lb-title">Running a few minutes late?</div>
+              <div class="lb-body">One tap and we'll let Jordan know gracefully. No awkward texts.</div>
+            </div>
+            <div class="con-card highlight">
+              <div class="cc-label">Home By</div>
+              <div class="cc-value">11:00 PM</div>
+              <div class="cc-sub">We'll send a gentle reminder at 10:30</div>
+            </div>
+            <div class="action-row">
+              <div class="action-btn leave">I'm Running Late</div>
+              <div class="action-btn stay">Extend Night</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="screen-label">Date Concierge</div>
+    </div>
+
+    <!-- SAFETY CHECK-IN -->
+    <div>
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="status-bar">
+            <span class="time">8:41</span>
+            <div class="icons">▲▲▲</div>
+          </div>
+          <div class="safety-screen">
+            <div class="safety-icon">🛡</div>
+            <div class="safety-title">Check In</div>
+            <div class="safety-sub">You've been at Skybar for<br>about an hour.</div>
+            <div class="safety-who">Date with Jordan · Still on</div>
+            <div class="safety-btns">
+              <div class="safety-btn green">✓</div>
+              <div class="safety-btn red">!</div>
+            </div>
+            <div class="safety-labels">
+              <span class="gl">All Good</span>
+              <span class="rl">Get Help</span>
+            </div>
+            <div class="safety-timer">9:51</div>
+            <div class="safety-timer-label">Auto-alert if no response</div>
+            <div class="safety-info">Your trusted contact Emma has been notified you're on a date. No response in 10 min triggers an alert.</div>
+          </div>
+        </div>
+      </div>
+      <div class="screen-label">Safety Check-In</div>
+    </div>
+
+    <!-- PDR -->
+    <div>
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="status-bar">
+            <span class="time">11:14</span>
+            <div class="icons">▲▲▲</div>
+          </div>
+          <div class="pdr-screen">
+            <div class="pdr-header">
+              <div class="ph-title">How'd it go?</div>
+              <div class="ph-sub">Post Date Review · Jordan</div>
+            </div>
+            <div class="pdr-messages">
+              <div class="pdr-question">You were there almost 3 hours. Good sign. What was the best moment?</div>
+              <div class="pdr-answer">When we stopped talking about surface stuff and just got real.</div>
+              <div class="pdr-question">What was missing, if anything?</div>
+              <div class="pdr-answer">Nothing really. Maybe a little more spontaneity.</div>
+            </div>
+            <div class="pdr-insight">
+              <div class="pi-label">AI Note</div>
+              Noted — weighting spontaneity higher in your next match profile.
+            </div>
+            <div class="pdr-footer">
+              <div class="pdr-rematch">Find My Next Match →</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="screen-label">Post Date Review</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="section-divider">· · ·</div>
+
+<div style="text-align:center; padding:20px 0 60px;">
+  <div style="font-size:32px; font-weight:200; color:#fff; margin-bottom:8px;">Second Date</div>
+  <div style="font-size:11px; letter-spacing:3px; text-transform:uppercase; color:#c8a96e; margin-bottom:20px;">We handle the hard part. You handle the fun part.</div>
+  <div style="font-size:12px; color:#333;">Concept UI — Not for distribution</div>
+</div>
+
+</body>
+</html>
