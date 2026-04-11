@@ -483,6 +483,44 @@
   }
   .pc-note strong { color: #888; font-style: normal; }
 
+  /* Copy button */
+  .copy-btn {
+    width: 100%;
+    margin-top: 12px;
+    padding: 12px;
+    background: rgba(200,169,110,0.1);
+    border: 1px solid rgba(200,169,110,0.3);
+    border-radius: 12px;
+    color: #c8a96e;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .copy-btn:hover { background: rgba(200,169,110,0.18); border-color: #c8a96e; }
+  .copy-btn:active { transform: scale(0.98); }
+
+  /* Privacy toast */
+  .privacy-toast {
+    position: absolute;
+    bottom: 70px;
+    left: 16px; right: 16px;
+    background: #1c1c1e;
+    border: 1px solid #2c2c2e;
+    border-radius: 14px;
+    padding: 14px 16px;
+    z-index: 200;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+  }
+  .privacy-toast.show { opacity: 1; transform: translateY(0); }
+  .toast-title { font-size: 13px; font-weight: 600; color: #fff; margin-bottom: 4px; }
+  .toast-body { font-size: 11px; color: #888; line-height: 1.6; }
+
   /* Utility */
   .hidden { display: none !important; }
 </style>
@@ -588,6 +626,13 @@
         </div>
       </div>
       <div class="pc-note">Profile sharpens after every date. <strong>Your match will never see this card</strong> — only the compatibility score it generates.</div>
+      <button class="copy-btn hidden" id="copy-btn" onclick="copySummary()">Copy My Profile Summary</button>
+    </div>
+
+    <!-- Privacy toast -->
+    <div class="privacy-toast" id="privacy-toast">
+      <div class="toast-title"><span style="color:#4ade80">✓</span> Copied to clipboard</div>
+      <div class="toast-body">Your interview answers are private and were not included. Only your profile summary was copied.</div>
     </div>
 
     <!-- Input -->
@@ -607,9 +652,9 @@
 
 <script>
 // ── CONFIG ───────────────────────────────────────────────────────────────────
-const API_KEY_STORAGE = 'second_date_api_key';
+const API_KEY = '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';
 const MODEL = 'claude-sonnet-4-6';
-const MAX_TURNS = 11; // AI exchanges before it wraps up
+const MAX_TURNS = 11;
 
 // ── SYSTEM PROMPT ────────────────────────────────────────────────────────────
 const SYSTEM_PROMPT = `You are the Second Date AI — the onboarding interviewer for a dating app called Second Date. Your job is to build a genuine psychological compatibility profile through natural conversation, not a questionnaire.
@@ -639,10 +684,10 @@ Cover these areas naturally over the course of the conversation (not in this exa
 After covering most of these areas (around 9–11 user turns), wrap up warmly. Your final message should feel like a natural close — something like "That's everything I need." End that final message with the exact token [[PROFILE_READY]] on its own line. Do not explain what it is. It will not be shown to the user.`;
 
 // ── STATE ────────────────────────────────────────────────────────────────────
-let conversationHistory = []; // [{role:'user'|'assistant', content:'...'}]
+let conversationHistory = [];
 let turnCount = 0;
 let waiting = false;
-let apiKey = localStorage.getItem(API_KEY_STORAGE) || '';
+let currentProfile = null;
 
 const messagesEl = document.getElementById('messages');
 const progressFill = document.getElementById('progress-fill');
@@ -716,50 +761,12 @@ function setInputState(enabled, placeholder) {
 }
 
 // ── API KEY SETUP ─────────────────────────────────────────────────────────────
-function promptForKey() {
-  // Inject a simple key-entry screen into the messages area
-  messagesEl.innerHTML = '';
-  const wrap = document.createElement('div');
-  wrap.style.cssText = 'padding:20px 16px; display:flex; flex-direction:column; gap:12px; align-items:center; text-align:center; flex:1;';
-  wrap.innerHTML = `
-    <div style="font-size:28px; margin-bottom:4px;">✦</div>
-    <div style="font-size:14px; font-weight:600; color:#fff;">One thing first</div>
-    <div style="font-size:12px; color:#666; line-height:1.6;">Enter your Anthropic API key to power the interview. It's stored only on this device.</div>
-    <input id="key-input" type="password" placeholder="sk-ant-..." style="
-      width:100%; background:#1c1c1e; border:1px solid #2c2c2e; border-radius:12px;
-      padding:12px 16px; font-size:13px; color:#e8e8ed; outline:none;
-      font-family:'Inter',sans-serif; caret-color:#c8a96e;">
-    <button onclick="saveKey()" style="
-      width:100%; background:#c8a96e; color:#000; font-weight:700; font-size:12px;
-      letter-spacing:1px; text-transform:uppercase; border:none; border-radius:24px;
-      padding:13px; cursor:pointer; font-family:'Inter',sans-serif;">
-      Let's Go
-    </button>
-    <div style="font-size:10px; color:#3a3a3c;">Key never leaves your browser</div>`;
-  messagesEl.appendChild(wrap);
-  setInputState(false, 'Enter your API key above...');
-  setTimeout(() => document.getElementById('key-input')?.focus(), 200);
-}
-
-function saveKey() {
-  const input = document.getElementById('key-input');
-  const val = input?.value.trim();
-  if (!val || !val.startsWith('sk-')) {
-    input.style.borderColor = '#ef4444';
-    return;
-  }
-  apiKey = val;
-  localStorage.setItem(API_KEY_STORAGE, val);
-  messagesEl.innerHTML = '';
-  startInterview();
-}
-
 // ── CLAUDE API CALL ───────────────────────────────────────────────────────────
 async function callClaude(messages, systemOverride) {
   const res = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: {
-      'x-api-key': apiKey,
+      'x-api-key': API_KEY,
       'anthropic-version': '2023-06-01',
       'content-type': 'application/json',
       'anthropic-dangerous-direct-browser-access': 'true'
@@ -818,6 +825,7 @@ ${transcript}`;
 
 function renderProfileCard(profile) {
   if (!profile) return;
+  currentProfile = profile;
   const card = document.getElementById('profile-card');
   card.querySelector('.pc-type').textContent = profile.type;
   card.querySelector('.pc-desc').textContent = profile.description;
@@ -833,7 +841,10 @@ function renderProfileCard(profile) {
   }
 
   card.classList.remove('hidden');
-  setTimeout(() => card.classList.add('visible'), 50);
+  setTimeout(() => {
+    card.classList.add('visible');
+    document.getElementById('copy-btn').classList.remove('hidden');
+  }, 50);
   document.getElementById('chat-header-status').textContent = 'Profile complete';
   scrollBottom();
 }
@@ -950,24 +961,51 @@ async function startInterview() {
     setInputState(true, 'Message...');
   } catch (err) {
     removeTyping();
-    if (err.message.includes('401') || err.message.includes('invalid')) {
-      localStorage.removeItem(API_KEY_STORAGE);
-      apiKey = '';
-      messagesEl.innerHTML = '';
-      addBubble('ai', 'That API key didn\'t work. Let\'s try again.');
-      setTimeout(promptForKey, 800);
-    } else {
-      addBubble('ai', `Couldn't connect: ${err.message}`);
-      waiting = false;
-      setInputState(true, 'Try again...');
-    }
+    addBubble('ai', `Couldn't connect: ${err.message}`);
+    waiting = false;
+    setInputState(true, 'Try again...');
   }
+}
+
+// ── COPY SUMMARY ──────────────────────────────────────────────────────────────
+function traitLabel(val, low, high) {
+  if (val < 35) return low;
+  if (val > 65) return high;
+  return 'balanced';
+}
+
+function copySummary() {
+  if (!currentProfile) return;
+  const p = currentProfile;
+  const traits = p.traits;
+  const text =
+`✦ My Second Date Profile
+
+${p.type}
+
+${p.description}
+
+Social energy: ${traitLabel(traits.social_energy, 'Introverted', 'Extroverted')}
+Attachment style: ${traitLabel(traits.attachment, 'Independent', 'Deeply connected')}
+Date style: ${traitLabel(traits.date_style, 'Low-key and casual', 'Go all out')}
+Pace: ${traitLabel(traits.pace, 'Slow burn', 'Moves fast')}
+
+${p.insight}
+
+— Second Date AI`;
+
+  navigator.clipboard.writeText(text).then(() => {
+    const toast = document.getElementById('privacy-toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3500);
+  });
 }
 
 function restartInterview() {
   conversationHistory = [];
   turnCount = 0;
   waiting = false;
+  currentProfile = null;
   messagesEl.innerHTML = '';
   chatInput.value = '';
   document.getElementById('send-btn').style.opacity = '1';
@@ -976,16 +1014,13 @@ function restartInterview() {
   const card = document.getElementById('profile-card');
   card.classList.add('hidden');
   card.classList.remove('visible');
+  document.getElementById('copy-btn').classList.add('hidden');
   setProgress(0);
   setTimeout(startInterview, 300);
 }
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
-if (!apiKey) {
-  promptForKey();
-} else {
-  startInterview();
-}
+startInterview();
 </script>
 </body>
 </html>
