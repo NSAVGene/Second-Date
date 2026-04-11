@@ -427,7 +427,7 @@
 
   .docs-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 16px;
   }
 
@@ -544,6 +544,27 @@
     color: #c8a96e;
   }
 
+  /* ── NAV BAR ───────────────────────────── */
+  .site-nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: rgba(8,8,8,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    height: 52px;
+  }
+  .nav-logo { font-size: 16px; font-weight: 200; letter-spacing: -0.5px; color: #fff; text-decoration: none; }
+  .nav-links { display: flex; gap: 6px; }
+  .nav-link { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #999; text-decoration: none; padding: 6px 14px; border-radius: 20px; transition: all 0.2s ease; }
+  .nav-link:hover { color: #fff; }
+  .nav-link.active { color: #c8a96e; }
+
   /* ── RESPONSIVE ────────────────────────── */
   @media (max-width: 768px) {
     .features-grid { grid-template-columns: 1fr; }
@@ -555,6 +576,17 @@
 </style>
 </head>
 <body>
+
+<nav class="site-nav">
+  <a href="index.html" class="nav-logo">Second Date</a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link active">Home</a>
+    <a href="INVESTOR_TEASER.html" class="nav-link">Teaser</a>
+    <a href="WHITEPAPER.html" class="nav-link">Whitepaper</a>
+    <a href="APP_TEST.html" class="nav-link">App Test</a>
+    <a href="INTERVIEW_TEST.html" class="nav-link">Interview</a>
+  </div>
+</nav>
 
 <!-- ── HERO ───────────────────────────────────────────────── -->
 <section class="hero">
@@ -570,8 +602,11 @@
     <a href="WHITEPAPER.html" class="btn btn-secondary">
       Read the Whitepaper <span class="arrow">→</span>
     </a>
-    <a href="APP_MOCKUP.html" class="btn btn-ghost">
-      App Mockup <span class="arrow">→</span>
+    <a href="APP_TEST.html" class="btn btn-ghost">
+      App Test <span class="arrow">→</span>
+    </a>
+    <a href="INTERVIEW_TEST.html" class="btn btn-ghost">
+      Try the Interview <span class="arrow">→</span>
     </a>
   </div>
 
@@ -766,11 +801,19 @@
       <div class="doc-arrow">→</div>
     </a>
 
-    <a href="APP_MOCKUP.html" class="doc-card">
+    <a href="APP_TEST.html" class="doc-card">
       <span class="doc-icon">⬡</span>
       <div class="doc-label">UI Concept</div>
-      <div class="doc-title">App Mockup</div>
+      <div class="doc-title">App Test</div>
       <div class="doc-desc">9 screens across the full user journey — from AI onboarding through match reveal, first video date, venue unlock, and post-date review.</div>
+      <div class="doc-arrow">→</div>
+    </a>
+
+    <a href="INTERVIEW_TEST.html" class="doc-card">
+      <span class="doc-icon">✦</span>
+      <div class="doc-label">Live AI</div>
+      <div class="doc-title">The Interview</div>
+      <div class="doc-desc">The real onboarding experience. A live AI conversation that builds your compatibility profile — then shows you what it learned.</div>
       <div class="doc-arrow">→</div>
     </a>
 
