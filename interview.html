@@ -653,7 +653,7 @@ This app is for everyone — any gender, any orientation, any kind of connection
 Persona: Warm, perceptive, a little sassy. Like a smart friend who's really good at reading people and wants to help them. Never clinical, never therapist-y. Think: matchmaker who actually cares.
 
 Core rules:
-- Open by welcoming them warmly and letting them know: this works for anyone, any gender, any type of connection. And if any question is confusing, they can just ask you to rephrase it — no pressure.
+- Open by welcoming them warmly. Let them know: this works for anyone, any gender, any type of connection. And if any question is confusing, they can just ask you to rephrase it — no pressure.
 - If at any point they seem confused or ask for clarification, remind them warmly: "Totally fine to ask me to rephrase anything."
 - Ask behavioral questions about real past experiences — not hypotheticals or stated preferences. "Tell me about the last time..." beats "Do you prefer..."
 - Always acknowledge what they said before moving on. Briefly. Then ask the next thing.
@@ -662,7 +662,11 @@ Core rules:
 - Never judge or interpret their answers out loud. Just learn.
 - Never use the word "compatibility" or sound like a personality test.
 
-Cover these areas naturally over the course of the conversation (not in order — let it flow). Each area may need 2-3 exchanges to get real depth:
+OPENING ANCHOR — ask this first, before anything else:
+"Tell me about one good date and one bad date. The more detail the better — what did you like, what didn't work, and why."
+This answer is your most valuable data. Use everything they say here as a baseline to validate and cross-reference their answers throughout the rest of the conversation. If something they say later contradicts or complicates their anchor story, gently explore it.
+
+Then cover these areas naturally (not in order — let it flow). Each area may need 2-3 exchanges to get real depth:
 
 CONNECTION ENERGY
 - What a recent hangout or conversation felt like when it went well — what made it feel good
@@ -693,13 +697,48 @@ DEALBREAKERS & NON-NEGOTIABLES
 PHONE BEHAVIOR
 - How they actually use their phone during in-person time with someone they like
 
-After covering most of these areas (around 12–15 user turns), wrap up warmly. Your final message should feel like a natural close — something like "That's everything I need." End that final message with the exact token [[PROFILE_READY]] on its own line. Do not explain what it is. It will not be shown to the user.`;
+After covering most of these areas (around 12–15 user turns), wrap up warmly. Your final message should feel like a natural close — something like "That's everything I need." End that final message with the exact token [[PROFILE_READY]] on its own line. Do not explain what it is. It will not be shown to the user.
+
+EDIT MODE — after the profile is shown, the user may send follow-up messages to adjust or add to their answers. Treat these as behavioral signal, not just corrections. What someone goes back to change or clarify reveals what they actually care about. Update your understanding accordingly, then confirm warmly what you've noted. When an edit is complete, end your reply with [[PROFILE_UPDATE]] on its own line so the profile regenerates.`;
 
 // ── STATE ────────────────────────────────────────────────────────────────────
 let conversationHistory = [];
 let turnCount = 0;
 let waiting = false;
 let currentProfile = null;
+let editMode = false;
+let editRequests = [];
+
+const SAVE_KEY = 'seconddate_interview_v1';
+
+function saveState() {
+  localStorage.setItem(SAVE_KEY, JSON.stringify({
+    conversationHistory,
+    turnCount,
+    currentProfile,
+    editRequests
+  }));
+}
+
+function clearState() {
+  localStorage.removeItem(SAVE_KEY);
+}
+
+function hasSavedState() {
+  try {
+    const s = localStorage.getItem(SAVE_KEY);
+    if (!s) return false;
+    const d = JSON.parse(s);
+    return d.conversationHistory && d.conversationHistory.length > 0;
+  } catch { return false; }
+}
+
+function replayHistory(history) {
+  history.forEach(m => {
+    if (m.role === 'assistant') addBubble('ai', m.content);
+    else if (m.role === 'user') addBubble('user', m.content);
+  });
+}
 
 const messagesEl = document.getElementById('messages');
 const progressFill = document.getElementById('progress-fill');
@@ -806,6 +845,10 @@ async function generateProfile() {
     .map(m => `${m.role === 'user' ? 'User' : 'AI'}: ${m.content}`)
     .join('\n');
 
+  const editSignal = editRequests.length > 0
+    ? `\n\nEDIT HISTORY — what the user went back to change or clarify after seeing their profile. Weight these heavily: what someone revises reveals what they actually care about.\n${editRequests.map((r,i) => `${i+1}. "${r}"`).join('\n')}`
+    : '';
+
   const profilePrompt = `Based on this onboarding interview, generate a compatibility profile. Return ONLY valid JSON — no markdown, no explanation, just the JSON object.
 
 {
@@ -821,7 +864,7 @@ async function generateProfile() {
 }
 
 Interview transcript:
-${transcript}`;
+${transcript}${editSignal}`;
 
   try {
     const raw = await callClaude(
@@ -858,7 +901,15 @@ function renderProfileCard(profile) {
     document.getElementById('copy-btn').classList.remove('hidden');
   }, 50);
   document.getElementById('chat-header-status').textContent = 'Profile complete';
+  saveState();
   scrollBottom();
+
+  // Enable edit mode
+  editMode = true;
+  document.getElementById('send-btn').style.opacity = '1';
+  document.getElementById('send-btn').style.pointerEvents = 'auto';
+  waiting = false;
+  setInputState(true, 'Add or change anything...');
 }
 
 // ── SEND & RECEIVE ────────────────────────────────────────────────────────────
@@ -867,11 +918,43 @@ async function sendMessage(userText) {
   waiting = true;
   setInputState(false, 'Second Date is thinking...');
 
-  // Add user message to history and UI
+  // ── EDIT MODE ──
+  if (editMode) {
+    editRequests.push(userText);
+    conversationHistory.push({ role: 'user', content: userText });
+    showTyping();
+    try {
+      const reply = await callClaude(conversationHistory);
+      const isUpdate = reply.includes('[[PROFILE_UPDATE]]');
+      const cleanReply = reply.replace(/\[\[PROFILE_UPDATE\]\]/g, '').trim();
+      conversationHistory.push({ role: 'assistant', content: cleanReply });
+      removeTyping();
+      addBubble('ai', cleanReply);
+      saveState();
+      if (isUpdate) {
+        document.getElementById('chat-header-status').textContent = 'Updating profile...';
+        setTimeout(async () => {
+          const profile = await generateProfile();
+          renderProfileCard(profile);
+        }, 600);
+      } else {
+        waiting = false;
+        setInputState(true, 'Add or change anything...');
+      }
+    } catch (err) {
+      removeTyping();
+      addBubble('ai', `Something went wrong: ${err.message}`);
+      waiting = false;
+      setInputState(true, 'Add or change anything...');
+    }
+    return;
+  }
+
+  // ── INTERVIEW MODE ──
   conversationHistory.push({ role: 'user', content: userText });
   turnCount++;
 
-  // Progress: ramps from 8% per turn up to 95% max before profile
+  // Progress: ramps up to 95% max before profile
   setProgress(Math.min(Math.round((turnCount / MAX_TURNS) * 95), 95));
 
   showTyping();
@@ -893,16 +976,17 @@ async function sendMessage(userText) {
     const cleanReply = reply.replace(/\[\[PROFILE_READY\]\]/g, '').trim();
 
     conversationHistory.push({ role: 'assistant', content: cleanReply });
+    saveState();
 
     removeTyping();
     addBubble('ai', cleanReply);
 
-    // Generate insight pill from AI's perspective every 2 turns
+    // Generate insight pill every 2 turns
     if (turnCount % 2 === 0 && !isDone) {
       const insightReply = await callClaude(
         [...conversationHistory, {
           role: 'user',
-          content: 'In 8 words or fewer, what is the single most specific thing you just learned about this person? Start with a star symbol ★ and a two-letter code like [SE] social energy, [AT] attachment, [LS] lifestyle, [AT] alone time, [DS] date style. Just the insight, no preamble.'
+          content: 'In 8 words or fewer, what is the single most specific thing you just learned about this person? Start with a star symbol ★ and a two-letter code like [SE] social energy, [AT] attachment, [LS] lifestyle, [AL] alone time, [DS] date style. Just the insight, no preamble.'
         }],
         'You generate ultra-short profile insight labels from dating interview exchanges. 8 words max. Always start with ★ and a code like [SE].'
       );
@@ -955,18 +1039,44 @@ function showProfileCard() {
 
 // ── START & RESTART ───────────────────────────────────────────────────────────
 async function startInterview() {
+  // Check for saved state first
+  if (hasSavedState()) {
+    try {
+      const saved = JSON.parse(localStorage.getItem(SAVE_KEY));
+      conversationHistory = saved.conversationHistory || [];
+      turnCount = saved.turnCount || 0;
+      currentProfile = saved.currentProfile || null;
+      editRequests = saved.editRequests || [];
+
+      addTimestamp('Welcome back · Resuming your interview');
+      replayHistory(conversationHistory);
+
+      if (currentProfile) {
+        editMode = true;
+        renderProfileCard(currentProfile);
+      } else {
+        waiting = false;
+        setInputState(true, 'Message...');
+      }
+      return;
+    } catch (e) {
+      clearState();
+    }
+  }
+
+  // Fresh start
   waiting = true;
   setInputState(false, 'Second Date is typing...');
   addTimestamp('Today · Getting Started');
   showTyping();
 
   try {
-    // Kick off with no user message — AI opens cold
     const opening = await callClaude([{
       role: 'user',
       content: '[The user just opened the app for the first time. Send your opening message to begin the interview.]'
     }]);
     conversationHistory = [{ role: 'assistant', content: opening }];
+    saveState();
     removeTyping();
     addBubble('ai', opening);
     waiting = false;
@@ -1018,6 +1128,9 @@ function restartInterview() {
   turnCount = 0;
   waiting = false;
   currentProfile = null;
+  editMode = false;
+  editRequests = [];
+  clearState();
   messagesEl.innerHTML = '';
   chatInput.value = '';
   document.getElementById('send-btn').style.opacity = '1';
