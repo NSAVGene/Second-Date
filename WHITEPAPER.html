@@ -106,6 +106,62 @@
     border-top: 1px solid #222;
     border-bottom: 1px solid #222;
   }
+  .bdi-block {
+    background: #0a0d0a;
+    border: 1px solid #1a2e1a;
+    border-left: 3px solid #4caf50;
+    border-radius: 4px;
+    padding: 36px 40px;
+    margin: 40px 0;
+  }
+  .bdi-block .bdi-label {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #4caf50;
+    margin-bottom: 16px;
+  }
+  .bdi-block h4 {
+    font-family: Georgia, serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: #d4e8d4;
+    margin-bottom: 16px;
+  }
+  .bdi-block p {
+    color: #8ab88a;
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 12px;
+  }
+  .bdi-block p:last-child { margin-bottom: 0; }
+  .bdi-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 24px;
+  }
+  .bdi-item {
+    background: #0d130d;
+    border: 1px solid #1a2e1a;
+    border-radius: 4px;
+    padding: 20px;
+  }
+  .bdi-item h5 {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: #4caf50;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+  .bdi-item p {
+    font-size: 13px;
+    color: #6a936a;
+    margin: 0;
+  }
+
   .pull-quote p {
     font-size: 26px;
     font-weight: 300;
@@ -531,6 +587,34 @@
   <p>After the conversation, the AI synthesizes everything it heard — not through a scoring algorithm, but through the same pattern recognition a matchmaker or therapist applies after a first session. It identifies what the person showed, not just what they said. The archetype name ("The Self-Contained Realist," "The Slow Burn Optimist") is a human-readable summary of a multidimensional behavioral picture.</p>
 
   <p>The profile gets sharper over time. Post Date Review data feeds real-world outcomes back into the system — what predicted connection, what didn't, what the gap map reveals. The interview is the starting point. The dates are the training data.</p>
+
+  <!-- BDI -->
+  <div class="bdi-block">
+    <div class="bdi-label">Proprietary · Confidential · Not for Distribution</div>
+    <h4>The Behavioral Drift Index (BDI)</h4>
+    <p>After a user completes their interview and receives their profile, the app keeps the conversation open. They can add context, soften an answer, change something, or go deeper on a topic. These post-profile revisions are not corrections — they are the most valuable behavioral signal in the entire system.</p>
+    <p>What someone says under questioning is one data point. What they feel compelled to revisit after seeing themselves reflected back is another. The delta between the two — the drift — reveals emotional salience that no direct question can surface.</p>
+    <p>The BDI tracks the direction, topic, and intensity of every revision. It is weighted heavily in profile generation and matching, and is never surfaced to the user. People who know they're being measured perform. The BDI only works because they don't.</p>
+    <div class="bdi-grid">
+      <div class="bdi-item">
+        <h5>Softening an answer</h5>
+        <p>A user who describes an ex harshly, then goes back to add nuance, is still processing. Match with someone patient, not someone intense.</p>
+      </div>
+      <div class="bdi-item">
+        <h5>Intensifying a dealbreaker</h5>
+        <p>A user who adds "actually that's a hard no for me" to something they initially downplayed got burned by it. Weight accordingly.</p>
+      </div>
+      <div class="bdi-item">
+        <h5>Returning to a topic unprompted</h5>
+        <p>If they bring it up again without being asked, it matters more than anything they said when they were asked.</p>
+      </div>
+      <div class="bdi-item">
+        <h5>Not revising at all</h5>
+        <p>High self-awareness. What they said first is what they meant. Low edit count correlates with emotional clarity — itself a matching signal.</p>
+      </div>
+    </div>
+    <p style="margin-top:24px; font-size:13px; color:#4a6e4a;">No competitor can replicate BDI without fundamentally redesigning their product. It requires a post-profile edit layer, a tracking architecture, and a profile generator that weights revision history as distinct signal. It cannot be bolted onto an existing app. It has to be built in from the start.</p>
+  </div>
 
   <!-- DATA FLYWHEEL -->
   <h2>The Data Flywheel</h2>
