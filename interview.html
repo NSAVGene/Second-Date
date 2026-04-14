@@ -8,135 +8,33 @@
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
+  html, body {
+    height: 100%;
+  }
+
   body {
     font-family: 'Inter', 'Helvetica Neue', sans-serif;
-    background: #080808;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 60px 20px;
-  }
-
-  /* NAV */
-  .site-nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 1000;
-    background: rgba(8,8,8,0.92);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid #1a1a1a;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 32px;
-    height: 52px;
-  }
-  .nav-logo { font-size: 16px; font-weight: 200; letter-spacing: -0.5px; color: #fff; text-decoration: none; }
-  .nav-links { display: flex; gap: 6px; }
-  .nav-link { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #999; text-decoration: none; padding: 6px 14px; border-radius: 20px; transition: all 0.2s ease; }
-  .nav-link:hover { color: #fff; }
-  .nav-link.active { color: #c8a96e; }
-
-  /* PAGE LABEL */
-  .page-label {
-    text-align: center;
-    margin-bottom: 40px;
-  }
-  .page-label .title {
-    font-size: 13px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: #c8a96e;
-    margin-bottom: 8px;
-  }
-  .page-label .sub {
-    font-size: 12px;
-    color: #444;
-    letter-spacing: 1px;
-  }
-
-  /* PHONE FRAME */
-  .phone {
-    width: 393px;
-    height: 852px;
-    background: #000;
-    border-radius: 54px;
-    border: 1px solid #2a2a2a;
-    position: relative;
-    overflow: hidden;
-    box-shadow:
-      0 0 0 1px #111,
-      0 60px 120px rgba(0,0,0,0.8),
-      0 20px 40px rgba(0,0,0,0.6),
-      inset 0 1px 0 rgba(255,255,255,0.08);
-  }
-
-  /* Dynamic Island */
-  .dynamic-island {
-    position: absolute;
-    top: 14px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 120px;
-    height: 34px;
-    background: #000;
-    border-radius: 20px;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding-right: 10px;
-    gap: 6px;
-  }
-  .island-camera {
-    width: 11px;
-    height: 11px;
-    border-radius: 50%;
-    background: #1a1a1a;
-    border: 1px solid #222;
-    position: relative;
-  }
-  .island-camera::after {
-    content: '';
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%,-50%);
-    width: 5px; height: 5px;
-    border-radius: 50%;
-    background: #111;
-    box-shadow: 0 0 0 1px #1e1e1e;
-  }
-
-  /* STATUS BAR */
-  .status-bar {
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 60px;
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    padding: 0 28px 8px;
-    z-index: 99;
-  }
-  .sb-time { font-size: 15px; font-weight: 600; color: #fff; letter-spacing: -0.3px; }
-  .sb-icons { display: flex; gap: 6px; align-items: center; }
-  .sb-icon { font-size: 11px; color: #fff; opacity: 0.85; }
-
-  /* SCREEN */
-  .screen {
-    position: absolute;
-    inset: 0;
     background: #0d0d0f;
+    height: 100%;
     display: flex;
     flex-direction: column;
+    align-items: center;
+  }
+
+  /* SCREEN — full viewport, centered, max 480px on desktop */
+  .screen {
+    width: 100%;
+    max-width: 480px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: #0d0d0f;
+    position: relative;
   }
 
   /* CHAT HEADER */
   .chat-header {
-    padding: 68px 20px 14px;
+    padding: 56px 20px 14px;
     border-bottom: 1px solid #1c1c1e;
     flex-shrink: 0;
     display: flex;
@@ -371,34 +269,24 @@
   }
   .insight-pill strong { font-weight: 600; }
 
-  /* Home indicator */
-  .home-indicator {
-    position: absolute;
-    bottom: 8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 130px;
-    height: 5px;
-    background: rgba(255,255,255,0.25);
-    border-radius: 3px;
-  }
-
   /* RESTART BUTTON */
   .restart-btn {
-    margin-top: 24px;
+    width: 100%;
+    max-width: 480px;
     background: transparent;
-    border: 1px solid #1e1e1e;
-    color: #444;
+    border: none;
+    border-top: 1px solid #1a1a1a;
+    color: #333;
     font-size: 10px;
     letter-spacing: 2px;
     text-transform: uppercase;
-    padding: 10px 24px;
-    border-radius: 20px;
+    padding: 14px;
     cursor: pointer;
     font-family: 'Inter', sans-serif;
-    transition: all 0.2s ease;
+    transition: color 0.2s ease;
+    flex-shrink: 0;
   }
-  .restart-btn:hover { color: #888; border-color: #333; }
+  .restart-btn:hover { color: #666; }
 
   /* Profile Card */
   .profile-card {
@@ -417,24 +305,24 @@
     transform: translateY(0);
   }
   .pc-eyebrow {
-    font-size: 9px;
+    font-size: 11px;
     letter-spacing: 3px;
     text-transform: uppercase;
     color: #c8a96e;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
   }
   .pc-type {
-    font-size: 18px;
+    font-size: 22px;
     font-weight: 600;
     color: #fff;
     letter-spacing: -0.5px;
-    margin-bottom: 4px;
+    margin-bottom: 8px;
   }
   .pc-desc {
-    font-size: 11px;
-    color: #888;
-    line-height: 1.6;
-    margin-bottom: 14px;
+    font-size: 15px;
+    color: #999;
+    line-height: 1.7;
+    margin-bottom: 18px;
   }
   .pc-traits {
     display: flex;
@@ -448,9 +336,9 @@
     gap: 8px;
   }
   .pc-trait-label {
-    font-size: 10px;
+    font-size: 13px;
     color: #666;
-    width: 80px;
+    width: 100px;
     flex-shrink: 0;
   }
   .pc-trait-track {
@@ -469,16 +357,16 @@
   .pc-trait-ends {
     display: flex;
     justify-content: space-between;
-    font-size: 8px;
+    font-size: 11px;
     color: #3a3a3c;
-    margin-top: 2px;
+    margin-top: 3px;
   }
   .pc-note {
-    font-size: 10px;
-    color: #555;
+    font-size: 13px;
+    color: #666;
     border-top: 1px solid #222;
-    padding-top: 10px;
-    line-height: 1.6;
+    padding-top: 12px;
+    line-height: 1.7;
     font-style: italic;
   }
   .pc-note strong { color: #888; font-style: normal; }
@@ -504,9 +392,12 @@
 
   /* Privacy toast */
   .privacy-toast {
-    position: absolute;
-    bottom: 70px;
-    left: 16px; right: 16px;
+    position: fixed;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    width: calc(100% - 32px);
+    max-width: 448px;
     background: #1c1c1e;
     border: 1px solid #2c2c2e;
     border-radius: 14px;
@@ -517,7 +408,7 @@
     transition: all 0.3s ease;
     pointer-events: none;
   }
-  .privacy-toast.show { opacity: 1; transform: translateY(0); }
+  .privacy-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
   .toast-title { font-size: 13px; font-weight: 600; color: #fff; margin-bottom: 4px; }
   .toast-body { font-size: 11px; color: #888; line-height: 1.6; }
 
@@ -527,30 +418,7 @@
 </head>
 <body>
 
-<div class="page-label">
-  <div class="title">Second Date</div>
-  <div class="sub">No questionnaire. No profile. Just a conversation.</div>
-</div>
-
-<!-- PHONE -->
-<div class="phone">
-
-  <!-- Dynamic Island -->
-  <div class="dynamic-island">
-    <div class="island-camera"></div>
-  </div>
-
-  <!-- Status bar -->
-  <div class="status-bar">
-    <span class="sb-time">9:41</span>
-    <div class="sb-icons">
-      <span class="sb-icon">●●●</span>
-      <span class="sb-icon">WiFi</span>
-      <span class="sb-icon">⬜</span>
-    </div>
-  </div>
-
-  <div class="screen">
+<div class="screen">
 
     <!-- Chat header -->
     <div class="chat-header">
@@ -632,12 +500,10 @@
       </button>
     </div>
 
-  </div>
+  <!-- Restart -->
+  <button class="restart-btn" onclick="restartInterview()">↺ Restart Interview</button>
 
-  <div class="home-indicator"></div>
 </div>
-
-<button class="restart-btn" onclick="restartInterview()">↺ Restart Interview</button>
 
 <script>
 // ── CONFIG ───────────────────────────────────────────────────────────────────
