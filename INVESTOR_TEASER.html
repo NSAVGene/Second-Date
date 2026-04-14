@@ -284,6 +284,7 @@
     .diff { flex-direction: column; gap: 15px; }
     .logo h1 { font-size: 32px; }
     .insight .big { font-size: 18px; }
+    .origin-grid, .youtube-strip, .doom-grid, .real-product-grid { grid-template-columns: 1fr; }
   }
 
   /* NAV BAR */
@@ -399,7 +400,7 @@
   <div style="margin-bottom:50px;">
     <div style="font-size:11px; letter-spacing:3px; text-transform:uppercase; color:#c8a96e; margin-bottom:16px; text-align:center;">Billions Built on Outdated Technology.</div>
     <div style="text-align:center; font-size:14px; color:#aaa; line-height:1.7; max-width:680px; margin:0 auto 30px;">Tinder launched in 2012. Its core mechanic — swipe left, swipe right — has not meaningfully changed since. Bumble added one rule. Match Group spent a decade acquiring competitors rather than innovating. The entire $9 billion dating app industry is running on technology that predates modern AI, behavioral learning, and on-device intelligence by a decade. The market is enormous, proven, and structurally underserved by every product currently in it. <strong style="color:#fff;">It's time for something revolutionary.</strong></div>
-    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px;">
+    <div class="origin-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px;">
 
       <div style="background:#111; border:1px solid #1e1e1e; border-radius:4px; padding:28px;">
         <div style="font-size:48px; font-weight:700; color:#fff; letter-spacing:-2px; line-height:1; margin-bottom:8px;">$40B</div>
@@ -452,7 +453,7 @@
   </div>
 
   <!-- YOUTUBE STAT STRIP -->
-  <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:50px;">
+  <div class="youtube-strip" style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:50px;">
     <div style="background:#111; border:1px solid #1e1e1e; border-radius:4px; padding:28px; display:flex; flex-direction:column; justify-content:space-between;">
       <div style="font-size:11px; letter-spacing:3px; text-transform:uppercase; color:#c8a96e; margin-bottom:14px;">The Proof It Works</div>
       <div style="font-size:42px; font-weight:700; color:#fff; line-height:1; margin-bottom:8px;">70%</div>
@@ -512,7 +513,7 @@
   <!-- DOOM SCROLLER CALLOUT -->
   <div style="background:#111; border:1px solid #1e1e1e; border-radius:6px; padding:36px 40px; margin-bottom:30px;">
     <div style="font-size:10px; letter-spacing:3px; text-transform:uppercase; color:#c8a96e; margin-bottom:20px;">The Signal Nobody Talks About</div>
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:30px;">
+    <div class="doom-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:30px;">
 
       <!-- LEFT: NUDGE SEQUENCE FIRST -->
       <div>
@@ -589,7 +590,7 @@
     <div style="font-size:11px; letter-spacing:3px; text-transform:uppercase; color:#c8a96e; margin-bottom:24px;">The Real Product</div>
     <div style="font-size:20px; font-weight:200; color:#fff; line-height:1.4; margin-bottom:20px;">The relaxed you is the best you.<br><span style="color:#c8a96e;">That's the whole thing.</span></div>
     <div style="font-size:14px; color:#999; line-height:1.8; margin-bottom:24px;">You're rushing out the door. Hands full. Heart pounding. Last thing you want to do is stop and send an apology text. So you don't. You show up flustered, apologetic, already behind — spending the first ten minutes of your date recovering instead of connecting.<br><br>Second Date already told them. Calmly. Before it was a problem. You walk in relaxed. You walk in as yourself. And that — not the algorithm, not the AI, not the matching — is when real connection happens.</div>
-    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:24px;">
+    <div class="real-product-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:24px;">
       <div style="background:#111; border:1px solid #1e1e1e; border-radius:4px; padding:16px; font-size:12px; color:#999; line-height:1.6;"><strong style="color:#aaa; display:block; margin-bottom:6px;">No profile to write</strong>No performance. No lying to yourself about your type. Just react.</div>
       <div style="background:#111; border:1px solid #1e1e1e; border-radius:4px; padding:16px; font-size:12px; color:#999; line-height:1.6;"><strong style="color:#aaa; display:block; margin-bottom:6px;">No stranger across the table</strong>You've already seen their face. Already broken the ice. Already relaxed.</div>
       <div style="background:#111; border:1px solid #1e1e1e; border-radius:4px; padding:16px; font-size:12px; color:#999; line-height:1.6;"><strong style="color:#aaa; display:block; margin-bottom:6px;">No awkward exit to manage</strong>One tap. The app says what you can't. Graceful. Zero hurt feelings.</div>
