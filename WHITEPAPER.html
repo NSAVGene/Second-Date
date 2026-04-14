@@ -353,7 +353,7 @@
     border-bottom: 1px solid #1a3a1a;
   }
   .privacy-block li:last-child { border: none; }
-  .privacy-block li::before { content: "— "; color: #4caf50; }
+  .privacy-block li::before { content: ""; }
 
   .disclaimer {
     margin-top: 80px;
@@ -383,11 +383,25 @@
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid #1a1a1a;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .site-nav .nav-inner {
+    width: 100%;
+    max-width: 860px;
+    padding: 0 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 32px;
-    height: 52px;
+    box-sizing: border-box;
+  }
+  .site-nav .nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    justify-content: flex-end;
   }
   .site-nav .nav-logo {
     font-size: 16px;
@@ -395,10 +409,6 @@
     letter-spacing: -0.5px;
     color: #fff;
     text-decoration: none;
-  }
-  .site-nav .nav-links {
-    display: flex;
-    gap: 6px;
   }
   .site-nav .nav-link {
     font-size: 10px;
@@ -418,13 +428,15 @@
 <body>
 
 <nav class="site-nav">
-  <a href="index.html" class="nav-logo">Second Date</a>
-  <div class="nav-links">
-    <a href="index.html" class="nav-link">Home</a>
-    <a href="INVESTOR_TEASER.html" class="nav-link">Teaser</a>
-    <a href="WHITEPAPER.html" class="nav-link active">Whitepaper</a>
-    <a href="APP_TEST.html" class="nav-link">App Test</a>
-    <a href="interview.html" class="nav-link">Interview</a>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Second Date</a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="INVESTOR_TEASER.html" class="nav-link">Teaser</a>
+      <a href="WHITEPAPER.html" class="nav-link active">Whitepaper</a>
+      <a href="APP_TEST.html" class="nav-link">App Test</a>
+      <a href="interview.html" class="nav-link">Interview</a>
+    </div>
   </div>
 </nav>
 <div class="nav-spacer"></div>
