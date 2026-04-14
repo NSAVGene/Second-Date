@@ -6,6 +6,7 @@
 <title>Second Date — Investor Teaser</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { max-width: 100%; overflow-x: hidden; }
   body {
     font-family: 'Helvetica Neue', Arial, sans-serif;
     background: #0a0a0a;
@@ -32,7 +33,7 @@
   }
   .logo { }
   .logo h1 {
-    font-size: 52px;
+    font-size: 42px;
     font-weight: 200;
     letter-spacing: -2px;
     color: #fff;
@@ -102,7 +103,7 @@
     margin-bottom: 50px;
   }
   .insight .big {
-    font-size: 28px;
+    font-size: 22px;
     font-weight: 200;
     color: #fff;
     line-height: 1.4;
@@ -249,7 +250,7 @@
     border-top: 1px solid #1e1e1e;
   }
   .cta .cta-line {
-    font-size: 28px;
+    font-size: 22px;
     font-weight: 200;
     color: #fff;
   }
@@ -281,8 +282,8 @@
     .header-right { text-align: left; }
     .cta { flex-direction: column; gap: 20px; align-items: flex-start; }
     .diff { flex-direction: column; gap: 15px; }
-    .logo h1 { font-size: 40px; }
-    .insight .big { font-size: 22px; }
+    .logo h1 { font-size: 32px; }
+    .insight .big { font-size: 18px; }
   }
 
   /* NAV BAR */
@@ -294,11 +295,19 @@
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid #1a1a1a;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .site-nav .nav-inner {
+    width: 100%;
+    max-width: 900px;
+    padding: 0 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 32px;
-    height: 52px;
+    box-sizing: border-box;
   }
   .site-nav .nav-logo {
     font-size: 16px;
@@ -309,7 +318,9 @@
   }
   .site-nav .nav-links {
     display: flex;
-    gap: 6px;
+    flex-wrap: wrap;
+    gap: 2px;
+    justify-content: flex-end;
   }
   .site-nav .nav-link {
     font-size: 10px;
@@ -324,18 +335,43 @@
   .site-nav .nav-link:hover { color: #fff; }
   .site-nav .nav-link.active { color: #c8a96e; }
   .nav-spacer { height: 52px; }
+
+  @media (max-width: 600px) {
+    .site-nav {
+      height: auto;
+      padding: 8px 0;
+    }
+    .site-nav .nav-inner {
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 0 12px;
+    }
+    .site-nav .nav-links {
+      justify-content: center;
+      gap: 2px;
+    }
+    .site-nav .nav-link {
+      padding: 4px 8px;
+      letter-spacing: 1px;
+      font-size: 9px;
+    }
+    .nav-spacer { height: 80px; }
+  }
 </style>
 </head>
 <body>
 
 <nav class="site-nav">
-  <a href="index.html" class="nav-logo">Second Date</a>
-  <div class="nav-links">
-    <a href="index.html" class="nav-link">Home</a>
-    <a href="INVESTOR_TEASER.html" class="nav-link active">Teaser</a>
-    <a href="WHITEPAPER.html" class="nav-link">Whitepaper</a>
-    <a href="APP_TEST.html" class="nav-link">App Test</a>
-    <a href="interview.html" class="nav-link">Interview</a>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Second Date</a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="INVESTOR_TEASER.html" class="nav-link active">Teaser</a>
+      <a href="WHITEPAPER.html" class="nav-link">Whitepaper</a>
+      <a href="APP_TEST.html" class="nav-link">App Test</a>
+      <a href="interview.html" class="nav-link">Interview</a>
+    </div>
   </div>
 </nav>
 
@@ -355,7 +391,7 @@
 
   <!-- MISSION STATEMENT -->
   <div style="text-align:center; padding:40px 20px 50px; border-bottom:1px solid #1e1e1e; margin-bottom:50px;">
-    <div style="font-size:28px; font-weight:200; color:#fff; font-style:italic; line-height:1.5; max-width:600px; margin:0 auto 16px;">"Nobody should have to pretend to be someone they're not to find love."</div>
+    <div style="font-size:20px; font-weight:200; color:#fff; font-style:italic; line-height:1.5; max-width:600px; margin:0 auto 16px;">"Nobody should have to pretend to be someone they're not to find love."</div>
     <div style="font-size:11px; letter-spacing:3px; text-transform:uppercase; color:#555;">The Second Date Mission</div>
   </div>
 
@@ -384,7 +420,7 @@
       </div>
 
     </div>
-    <div style="text-align:center; margin-top:24px; font-size:30px; color:#fff; font-style:italic; font-weight:300; padding:30px; border:1px solid #1e1e1e; border-radius:4px; background:#0a0a0a;">
+    <div style="text-align:center; margin-top:24px; font-size:20px; color:#fff; font-style:italic; font-weight:300; padding:30px; border:1px solid #1e1e1e; border-radius:4px; background:#0a0a0a;">
       Existing apps optimize for activity.<br>
       <strong style="font-style:normal; color:#c8a96e;">We optimize for accuracy.</strong>
     </div>
@@ -551,7 +587,7 @@
   <!-- THE REAL PRODUCT -->
   <div style="background:#0a0a0a; border:1px solid #1e1e1e; border-radius:6px; padding:40px; margin-bottom:40px;">
     <div style="font-size:11px; letter-spacing:3px; text-transform:uppercase; color:#c8a96e; margin-bottom:24px;">The Real Product</div>
-    <div style="font-size:26px; font-weight:200; color:#fff; line-height:1.4; margin-bottom:20px;">The relaxed you is the best you.<br><span style="color:#c8a96e;">That's the whole thing.</span></div>
+    <div style="font-size:20px; font-weight:200; color:#fff; line-height:1.4; margin-bottom:20px;">The relaxed you is the best you.<br><span style="color:#c8a96e;">That's the whole thing.</span></div>
     <div style="font-size:14px; color:#999; line-height:1.8; margin-bottom:24px;">You're rushing out the door. Hands full. Heart pounding. Last thing you want to do is stop and send an apology text. So you don't. You show up flustered, apologetic, already behind — spending the first ten minutes of your date recovering instead of connecting.<br><br>Second Date already told them. Calmly. Before it was a problem. You walk in relaxed. You walk in as yourself. And that — not the algorithm, not the AI, not the matching — is when real connection happens.</div>
     <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:24px;">
       <div style="background:#111; border:1px solid #1e1e1e; border-radius:4px; padding:16px; font-size:12px; color:#999; line-height:1.6;"><strong style="color:#aaa; display:block; margin-bottom:6px;">No profile to write</strong>No performance. No lying to yourself about your type. Just react.</div>
@@ -573,7 +609,7 @@
       <strong style="color:#fff;">Third Date:</strong> Both said yes in the PDR. Enter the draw. <strong style="color:#c8a96e;">Second Date picks up the tab.</strong>
     </div>
     <div style="font-size:13px; color:#555; line-height:1.7; max-width:500px; margin:0 auto 30px;">Not everyone wins — but everyone wonders if they will. Every PDR is a ticket. Every mutual yes is a spin of the wheel. Winners post it. Tag it. Tell everyone. The product is the promotion.</div>
-    <div style="font-size:26px; font-weight:200; color:#fff; font-style:italic; line-height:1.5; border-top:1px solid #1e1e1e; padding-top:28px;">
+    <div style="font-size:20px; font-weight:200; color:#fff; font-style:italic; line-height:1.5; border-top:1px solid #1e1e1e; padding-top:28px;">
       "We handle the hard part. You handle the fun part."
     </div>
   </div>
